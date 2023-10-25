@@ -47,7 +47,7 @@ public class Human extends Player implements ActionListener {
     private void shoot(int x, int y) {
         shootResult = opponent.getShot(x, y);
 
-        if (shootResult == ShootResult.MISS){
+        if (shootResult == ShootResult.MISS) {
             switchPlayers();
         }
 

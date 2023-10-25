@@ -55,10 +55,11 @@ public class Computer extends Player {
     private int[] getCoordinates() {
         int[] coordinates;
 
-        if (shootToPotentialAims)
+        if (shootToPotentialAims) {
             coordinates = getNextCoordinates();
-        else
+        } else {
             coordinates = getRandomCoordinates();
+        }
 
         return coordinates;
     }
@@ -127,6 +128,7 @@ public class Computer extends Player {
                 if (enemyCells[i][y].getState() == Cell.CellState.MISS) {
                     break;
                 }
+
                 if (enemyCells[i][y].getState() == Cell.CellState.SEA) {
                     rightAims.add(i);
                 }
@@ -138,6 +140,7 @@ public class Computer extends Player {
                 if (enemyCells[i][y].getState() == Cell.CellState.MISS) {
                     break;
                 }
+
                 if (enemyCells[i][y].getState() == Cell.CellState.SEA) {
                     leftAims.add(i);
                 }
@@ -148,6 +151,7 @@ public class Computer extends Player {
                 if (enemyCells[x][i].getState() == Cell.CellState.MISS) {
                     break;
                 }
+
                 if (enemyCells[x][i].getState() == Cell.CellState.SEA) {
                     upAims.add(i);
                 }
@@ -158,8 +162,10 @@ public class Computer extends Player {
                 if (enemyCells[x][i].getState() == Cell.CellState.MISS) {
                     break;
                 }
-                if (enemyCells[x][i].getState() == Cell.CellState.SEA)
+
+                if (enemyCells[x][i].getState() == Cell.CellState.SEA) {
                     downAims.add(i);
+                }
             } else break;
         }
     }
@@ -175,9 +181,12 @@ public class Computer extends Player {
     public void afterShot(int x, int y) {
         boolean sleep = false;
 
-        switch (shootResult){
+        switch (shootResult) {
             case MISS:
-                if (shootToPotentialAims) currentAims.clear();
+                if (shootToPotentialAims) {
+                    currentAims.clear();
+                }
+
                 enemyCells[x][y].setState(Cell.CellState.MISS);
                 switchPlayers();
                 break;

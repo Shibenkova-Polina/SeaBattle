@@ -81,12 +81,15 @@ public class ArrangementOfShips {
         if (xFrom < 0) {
             xFrom = 0;
         }
+
         if (yFrom < 0) {
             yFrom = 0;
         }
+
         if (yTo > Field.fieldSize - 1) {
             yTo = Field.fieldSize - 1;
         }
+
         if (xTo > Field.fieldSize - 1) {
             xTo = Field.fieldSize - 1;
         }
