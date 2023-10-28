@@ -207,7 +207,9 @@ public class Computer extends Player {
         Messages.getInstance().getMessage(false, shootResult);
 
         try {
-            if (sleep) Thread.sleep(2000);
+            if (sleep) {
+                Thread.sleep(2000);
+            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
