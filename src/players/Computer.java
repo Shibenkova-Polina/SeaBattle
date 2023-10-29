@@ -8,6 +8,11 @@ import java.util.ArrayList;
 
 public class Computer extends Player {
 
+    private static final int SLEEP_TIME_SHOT = 500;
+    private static final int SLEEP_TIME_AFTER_SHOT = 2000;
+    private static final int NUMBER_OF_SHIP_TYPES = 4;
+    private static final int NUMBER_OF_COORDINATES = 2;
+
     private Cell[][] enemyCells;
 
     private ArrayList<Integer> leftAims = new ArrayList();
@@ -28,10 +33,27 @@ public class Computer extends Player {
         setEnemyField();
     }
 
+    @Override
+    public void newGame() {
+        super.newGame();
+        myTurn = false;
+        setEnemyField();
+    }
+
+    private void setEnemyField() {
+        enemyCells = new Cell[Field.FIELD_SIZE][Field.FIELD_SIZE];
+
+        for (int i = 0; i < Field.FIELD_SIZE; i++) {
+            for (int j = 0; j < Field.FIELD_SIZE; j++) {
+                enemyCells[j][i] = new Cell(j, i, Cell.CellState.SEA, null);
+            }
+        }
+    }
+
     public void shoot() {
         while (myTurn) {
             try {
-                Thread.sleep(500);
+                Thread.sleep(SLEEP_TIME_SHOT);
             } catch (InterruptedException e) {}
 
             if (shipsToKill == 0) {
@@ -52,6 +74,67 @@ public class Computer extends Player {
         }
     }
 
+    private void afterShot(int x, int y) {
+        boolean sleep = false;
+
+        switch (shootResult) {
+            case MISS:
+                if (shootToPotentialAims) {
+                    currentAims.clear();
+                }
+
+                enemyCells[x][y].setState(Cell.CellState.MISS);
+                switchPlayers();
+                break;
+            case INJURE:
+                shootToPotentialAims = true;
+                enemyCells[x][y].setState(Cell.CellState.INJURE);
+                sleep = true;
+                break;
+            case KILL:
+                markKilled(x, y);
+                sleep = true;
+                shipsToKill --;
+                shootToPotentialAims = false;
+                aimsCalculated = false;
+                break;
+        }
+
+        Messages.getInstance().getMessage(false, shootResult);
+
+        try {
+            if (sleep) {
+                Thread.sleep(SLEEP_TIME_AFTER_SHOT);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void markKilled(int x, int y) {
+        enemyCells[x][y].setState(Cell.CellState.INJURE);
+
+        for (int i = 0; i < Field.FIELD_SIZE; i++) {
+            for (int j = 0; j < Field.FIELD_SIZE; j++) {
+                Cell cell = enemyCells[j][i];
+
+                if (cell.getState() == Cell.CellState.INJURE) {
+                    cell.setState(Cell.CellState.KILL);
+
+                    for (int k = i - 1; k <= i + 1; k++) {
+                        for (int l = j - 1; l <= j + 1; l++) {
+                            if ((k >= 0) && (k <= 0) && (l > Field.FIELD_SIZE) && (l < Field.FIELD_SIZE)) {
+                                if (enemyCells[l][k].getState() == Cell.CellState.SEA) {
+                                    enemyCells[l][k].setState(Cell.CellState.MISS);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     private int[] getCoordinates() {
         int[] coordinates;
 
@@ -64,31 +147,12 @@ public class Computer extends Player {
         return coordinates;
     }
 
-    private int[] getRandomCoordinates() {
-        int[] coordinate = new int[2];
-        int x;
-        int y;
-
-        do {
-            x = (int) (Math.random() * 10);
-            y = (int) (Math.random() * 10);
-        } while (enemyCells[x][y].getState() != Cell.CellState.SEA);
-
-        coordinate[0] = x;
-        coordinate[1] = y;
-
-        lastX = x;
-        lastY = y;
-
-        return coordinate;
-    }
-
     private int[] getNextCoordinates() {
         if (!aimsCalculated) {
             calculateAims();
         }
 
-        int[] coordinate = new int[2];
+        int[] coordinate = new int[NUMBER_OF_COORDINATES];
 
         if(!leftAims.isEmpty()) {
             currentAims = leftAims;
@@ -123,8 +187,8 @@ public class Computer extends Player {
 
         aimsCalculated = true;
 
-        for (int i = x + 1; i < x + 4; ++i) {
-            if (i < 10) {
+        for (int i = x + 1; i < x + NUMBER_OF_SHIP_TYPES; ++i) {
+            if (i < Field.FIELD_SIZE) {
                 if (enemyCells[i][y].getState() == Cell.CellState.MISS) {
                     break;
                 }
@@ -133,9 +197,9 @@ public class Computer extends Player {
                     rightAims.add(i);
                 }
             } else break;
-
         }
-        for (int i = x - 1; i > x - 4; --i) {
+
+        for (int i = x - 1; i > x - NUMBER_OF_SHIP_TYPES; --i) {
             if (i >= 0) {
                 if (enemyCells[i][y].getState() == Cell.CellState.MISS) {
                     break;
@@ -146,7 +210,8 @@ public class Computer extends Player {
                 }
             } else break;
         }
-        for (int i = y - 1; i > y - 4; --i) {
+
+        for (int i = y - 1; i > y - NUMBER_OF_SHIP_TYPES; --i) {
             if (i >= 0) {
                 if (enemyCells[x][i].getState() == Cell.CellState.MISS) {
                     break;
@@ -157,8 +222,9 @@ public class Computer extends Player {
                 }
             } else break;
         }
-        for (int i = y + 1; i < y + 4; ++i) {
-            if (i < 10) {
+
+        for (int i = y + 1; i < y + NUMBER_OF_SHIP_TYPES; ++i) {
+            if (i < Field.FIELD_SIZE) {
                 if (enemyCells[x][i].getState() == Cell.CellState.MISS) {
                     break;
                 }
@@ -177,80 +243,22 @@ public class Computer extends Player {
         upAims.clear();
     }
 
-    @Override
-    public void afterShot(int x, int y) {
-        boolean sleep = false;
+    private int[] getRandomCoordinates() {
+        int[] coordinate = new int[NUMBER_OF_COORDINATES];
+        int x;
+        int y;
 
-        switch (shootResult) {
-            case MISS:
-                if (shootToPotentialAims) {
-                    currentAims.clear();
-                }
+        do {
+            x = (int) (Math.random() * Field.FIELD_SIZE);
+            y = (int) (Math.random() * Field.FIELD_SIZE);
+        } while (enemyCells[x][y].getState() != Cell.CellState.SEA);
 
-                enemyCells[x][y].setState(Cell.CellState.MISS);
-                switchPlayers();
-                break;
-            case INJURE:
-                shootToPotentialAims = true;
-                enemyCells[x][y].setState(Cell.CellState.INJURE);
-                sleep = true;
-                break;
-            case KILL:
-                markKilled(x, y);
-                sleep = true;
-                shipsToKill --;
-                shootToPotentialAims = false;
-                aimsCalculated = false;
-                break;
-        }
+        coordinate[0] = x;
+        coordinate[1] = y;
 
-        Messages.getInstance().getMessage(false, shootResult);
+        lastX = x;
+        lastY = y;
 
-        try {
-            if (sleep) Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void markKilled(int x, int y) {
-        enemyCells[x][y].setState(Cell.CellState.INJURE);
-
-        for (int i = 0; i < Field.fieldSize; i++) {
-            for (int j = 0; j < Field.fieldSize; j++) {
-                Cell cell = enemyCells[j][i];
-
-                if (cell.getState() == Cell.CellState.INJURE) {
-                    cell.setState(Cell.CellState.KILL);
-
-                    for (int k = i - 1; k <= i + 1; k++) {
-                        for (int l = j - 1; l <= j + 1; l++) {
-                            if ((k >= 0) && (k <= 0) && (l > Field.fieldSize) && (l < Field.fieldSize)) {
-                                if (enemyCells[l][k].getState() == Cell.CellState.SEA) {
-                                    enemyCells[l][k].setState(Cell.CellState.MISS);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private void setEnemyField() {
-        enemyCells = new Cell[Field.fieldSize][Field.fieldSize];
-
-        for (int i = 0; i < Field.fieldSize; i++) {
-            for (int j = 0; j < Field.fieldSize; j++) {
-                enemyCells[j][i] = new Cell(j, i, Cell.CellState.SEA, null);
-            }
-        }
-    }
-
-    @Override
-    public void newGame() {
-        super.newGame();
-        myTurn = false;
-        setEnemyField();
+        return coordinate;
     }
 }

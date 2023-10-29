@@ -22,16 +22,6 @@ public class Human extends Player implements ActionListener {
         }
     }
 
-    public void setActionListnerToCells() {
-        Cell[][] cells = opponent.getField().getCells();
-
-        for (int i = 0; i < Field.fieldSize; i++) {
-            for (int j = 0; j < Field.fieldSize; j++) {
-                cells[j][i].addActionListener(this);
-            }
-        }
-    }
-
     @Override
     public void setOpponent(Player opponent) {
         super.setOpponent(opponent);
@@ -51,15 +41,24 @@ public class Human extends Player implements ActionListener {
             switchPlayers();
         }
 
-        afterShot(0, 0);
+        afterShot();
     }
 
-    @Override
-    public void afterShot(int x, int y) {
+    private void afterShot() {
         if (shootResult == ShootResult.KILL) {
             shipsToKill--;
         }
 
         Messages.getInstance().getMessage(true, shootResult);
+    }
+
+    public void setActionListnerToCells() {
+        Cell[][] cells = opponent.getField().getCells();
+
+        for (int i = 0; i < Field.FIELD_SIZE; i++) {
+            for (int j = 0; j < Field.FIELD_SIZE; j++) {
+                cells[j][i].addActionListener(this);
+            }
+        }
     }
 }

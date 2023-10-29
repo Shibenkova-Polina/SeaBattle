@@ -4,12 +4,13 @@ import gameElements.Cell;
 import gameElements.Field;
 
 public abstract class Player {
+    public static final int NUMBER_OF_PLAYER_SHIPS = 10;
 
     public Player opponent;
-    private Field field;
     public boolean myTurn;
-    public int shipsToKill = 10;
+    public int shipsToKill = NUMBER_OF_PLAYER_SHIPS;
     public ShootResult shootResult;
+    private Field field;
 
     public Player() {
         field = new Field();
@@ -27,6 +28,12 @@ public abstract class Player {
         return field;
     }
 
+    public enum ShootResult {
+        MISS,
+        INJURE,
+        KILL
+    }
+
     public void setOpponent(Player opponent) {
         this.opponent = opponent;
     }
@@ -34,12 +41,6 @@ public abstract class Player {
     public void switchPlayers() {
         myTurn = !myTurn;
         opponent.myTurn = !opponent.myTurn;
-    }
-
-    public enum ShootResult {
-        MISS,
-        INJURE,
-        KILL
     }
 
     public ShootResult getShot(int x, int y) {
@@ -62,10 +63,8 @@ public abstract class Player {
         } return null;
     }
 
-    public void afterShot(int x, int y) {};
-
     public void newGame() {
         field.resetCells();
-        shipsToKill = 10;
+        shipsToKill = NUMBER_OF_PLAYER_SHIPS;
     }
 }

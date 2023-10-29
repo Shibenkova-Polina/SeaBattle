@@ -7,6 +7,8 @@ import gameElements.Ship;
 import java.util.ArrayList;
 
 public class ArrangementOfShips {
+    private static final int NUMBER_OF_ORIENTATIONS = 2;
+    private static final int NUMBER_OF_SHIP_TYPES = 4;
 
     private static Cell[][] placementField;
 
@@ -15,15 +17,11 @@ public class ArrangementOfShips {
         VERTICAL
     }
 
-    public static void setPlacementField(Cell[][] placementField) {
-        ArrangementOfShips.placementField = placementField;
-    }
-
     public static void createShips(Field field) {
         ArrayList<Ship> ships = new ArrayList<>();
 
-        for (int shipSize = 4; shipSize >= 1 ; --shipSize) {
-            int shipsCount = 5 - shipSize;
+        for (int shipSize = NUMBER_OF_SHIP_TYPES; shipSize >= 1 ; --shipSize) {
+            int shipsCount = NUMBER_OF_SHIP_TYPES - shipSize + 1;
 
             for (int i = 0; i < shipsCount; ++i) {
                 Orientation orientation;
@@ -31,7 +29,7 @@ public class ArrangementOfShips {
                 int y;
 
                 do {
-                    int random = (int) (Math.random() * 2);
+                    int random = (int) (Math.random() * NUMBER_OF_ORIENTATIONS);
 
                     if (random == 0) {
                         orientation = Orientation.HORIZONTAL;
@@ -40,11 +38,11 @@ public class ArrangementOfShips {
                     }
 
                     if (orientation == Orientation.HORIZONTAL) {
-                        x = (int) (Math.random() * (Field.fieldSize - shipSize + 1));
-                        y = (int) (Math.random() * Field.fieldSize);
+                        x = (int) (Math.random() * (Field.FIELD_SIZE - shipSize + 1));
+                        y = (int) (Math.random() * Field.FIELD_SIZE);
                     } else {
-                        x = (int) (Math.random() * Field.fieldSize);
-                        y = (int) (Math.random() * (Field.fieldSize - shipSize + 1));
+                        x = (int) (Math.random() * Field.FIELD_SIZE);
+                        y = (int) (Math.random() * (Field.FIELD_SIZE - shipSize + 1));
                     }
                 } while (!validPlace(x, y, shipSize, orientation));
 
@@ -66,14 +64,14 @@ public class ArrangementOfShips {
             xTo = x + size;
             yTo = y + 1;
 
-            if (xTo > Field.fieldSize) {
+            if (xTo > Field.FIELD_SIZE) {
                 return false;
             }
         } else {
             xTo = x + 1;
             yTo = y + size;
 
-            if (yTo > Field.fieldSize) {
+            if (yTo > Field.FIELD_SIZE) {
                 return false;
             }
         }
@@ -86,12 +84,12 @@ public class ArrangementOfShips {
             yFrom = 0;
         }
 
-        if (yTo > Field.fieldSize - 1) {
-            yTo = Field.fieldSize - 1;
+        if (yTo > Field.FIELD_SIZE - 1) {
+            yTo = Field.FIELD_SIZE - 1;
         }
 
-        if (xTo > Field.fieldSize - 1) {
-            xTo = Field.fieldSize - 1;
+        if (xTo > Field.FIELD_SIZE - 1) {
+            xTo = Field.FIELD_SIZE - 1;
         }
 
         for (int i = xFrom; i <= xTo; i++) {
@@ -131,7 +129,7 @@ public class ArrangementOfShips {
 
         for (int k = x - 1; k <= xTo + 1; k++) {
             for (int l = y - 1; l <= yTo + 1; l++) {
-                if (k >= 0 && k < Field.fieldSize && l >= 0 && l < Field.fieldSize) {
+                if (k >= 0 && k < Field.FIELD_SIZE && l >= 0 && l < Field.FIELD_SIZE) {
                     if (placementField[l][k].getState() != Cell.CellState.SHIP) {
                         if (!borders.contains(placementField[l][k])) {
                             borders.add(placementField[l][k]);
@@ -145,5 +143,9 @@ public class ArrangementOfShips {
         ship.setBorders(borders);
 
         return ship;
+    }
+
+    public static void setPlacementField(Cell[][] placementField) {
+        ArrangementOfShips.placementField = placementField;
     }
 }

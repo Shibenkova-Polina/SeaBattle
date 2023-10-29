@@ -12,6 +12,10 @@ public class Messages {
         return instance;
     }
 
+    public void getStartMessage(){
+        GameInterface.textLabel.setText("Твой ход");
+    }
+
     public void getMessage(boolean human, Player.ShootResult shootResult) {
         if (shootResult == null) {
             return;
@@ -50,9 +54,5 @@ public class Messages {
         } else {
             GameInterface.textLabel.setText("Игра окончена. Компьютер победил. Возьми реванш...");
         }
-    }
-
-    public void getStartMessage(){
-        GameInterface.textLabel.setText("Твой ход");
     }
 }

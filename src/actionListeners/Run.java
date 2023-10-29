@@ -5,6 +5,7 @@ import gui.Messages;
 import gameProcess.Game;
 
 public class Run implements Runnable {
+    private static final int SLEEP_TIME = 10;
 
     @Override
     public void run() {
@@ -35,7 +36,7 @@ public class Run implements Runnable {
             }
 
             try {
-                Thread.sleep(10);
+                Thread.sleep(SLEEP_TIME);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

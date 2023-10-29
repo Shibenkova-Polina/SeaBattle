@@ -19,6 +19,14 @@ public class Game {
         computer.setOpponent(human);
     }
 
+    public static Game getInstance() {
+        if (game == null) {
+            game = new Game();
+        }
+
+        return game;
+    }
+
     public Thread getLastGame() {
         return lastGame;
     }
@@ -28,13 +36,5 @@ public class Game {
 
         lastGame = new Thread(run);
         lastGame.start();
-    }
-
-    public static Game getInstance() {
-        if (game == null) {
-            game = new Game();
-        }
-
-        return game;
     }
 }

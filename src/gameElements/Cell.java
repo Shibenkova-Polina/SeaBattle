@@ -7,9 +7,8 @@ import java.util.ArrayList;
 
 public class Cell extends JButton {
 
-    private int xCoord;
-    private int yCoord;
-
+    private final int xCoord;
+    private final int yCoord;
     private Ship ship;
     private CellState state;
 
@@ -33,15 +32,6 @@ public class Cell extends JButton {
         return state;
     }
 
-    public void setState(CellState state) {
-        this.state = state;
-        GameInterface.getInstance().draw();
-    }
-
-    public void setShip(Ship ship) {
-        this.ship = ship;
-    }
-
     public int getXCoord() {
         return xCoord;
     }
@@ -50,8 +40,12 @@ public class Cell extends JButton {
         return yCoord;
     }
 
-    public boolean isShip(){
-        return state == CellState.SHIP;
+    public void setShip(Ship ship) {
+        this.ship = ship;
+    }
+
+    public void inititalizeState(CellState state){
+        this.state = state;
     }
 
     public void getShot() {
@@ -69,7 +63,7 @@ public class Cell extends JButton {
         }
     }
 
-    private boolean conditionOfShip() {
+    public boolean conditionOfShip() {
         ArrayList<Cell> cells = ship.getCells();
 
         for (Cell cell : cells){
@@ -79,10 +73,6 @@ public class Cell extends JButton {
         }
 
         return false;
-    }
-
-    public void inititalizeState(CellState state){
-        this.state = state;
     }
 
     @Override
@@ -98,5 +88,14 @@ public class Cell extends JButton {
         Cell cell = (Cell) obj;
 
         return (cell.xCoord == xCoord && cell.yCoord == yCoord);
+    }
+
+    public boolean isShip(){
+        return state == CellState.SHIP;
+    }
+
+    public void setState(CellState state) {
+        this.state = state;
+        GameInterface.getInstance().draw();
     }
 }

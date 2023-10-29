@@ -11,6 +11,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameInterface extends JFrame {
+    private static final int INTERFACE_WIDTH = 1100;
+    private static final int INTERFACE_HEIGHT = 800;
+    private static final int BUTTON_WIDTH = 200;
+    private static final int BUTTON_HEIGHT = 100;
+    private static final int PANEL_FIELD_SIZE = 400;
+    private static final int WINDOW_GRID_SIZE = 2;
 
     private CardLayout cardLayout = new CardLayout();
     private JPanel cardPanel = new JPanel(cardLayout);
@@ -24,28 +30,27 @@ public class GameInterface extends JFrame {
     private JPanel buttonAlignment = new JPanel(new GridBagLayout());
     private GridBagConstraints constraints = new GridBagConstraints();
 
-    static JLabel textLabel = new JLabel();
-
     private final ImageIcon ship = new ImageIcon(GameInterface.class.getResource("ship.png"));
     private final ImageIcon kill = new ImageIcon(GameInterface.class.getResource("kill.png"));
     private final ImageIcon injure = new ImageIcon(GameInterface.class.getResource("injure.png"));
     private final ImageIcon miss = new ImageIcon(GameInterface.class.getResource("miss.png"));
     private final ImageIcon sea = new ImageIcon(GameInterface.class.getResource("sea.png"));
-
     private final ImageIcon picture = new ImageIcon(GameInterface.class.getResource("picture.png"));
 
     private static GameInterface instance;
 
+    public static JLabel textLabel = new JLabel();
+
     private GameInterface() {
         super("Морской бой");
-        setSize(1100, 800);
+        setSize(INTERFACE_WIDTH, INTERFACE_HEIGHT);
         setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JButton start = new JButton("Начать игру");
-        start.setPreferredSize(new Dimension(200, 100));
+        start.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         JButton exit = new JButton("Выйти");
-        exit.setPreferredSize(new Dimension(200, 100));
+        exit.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         JLabel picture = new JLabel(this.picture);
         panelStart.add(start);
         panelStart.add(picture);
@@ -60,7 +65,7 @@ public class GameInterface extends JFrame {
         start.addActionListener(new ActionListenerSwitch(cardLayout, cardPanel, "play"));
 
         JButton backToMenu = new JButton("Вернуться в меню");
-        backToMenu.setPreferredSize(new Dimension(200, 100));
+        backToMenu.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         backToMenu.addActionListener(new ActionListenerSwitch(cardLayout, cardPanel, "start"));
 
         initializeFields();
@@ -68,11 +73,11 @@ public class GameInterface extends JFrame {
         textLabel = new JLabel("Мой ход", SwingConstants.CENTER);
 
         JButton newGameButton = new JButton("Новая игра");
-        newGameButton.setPreferredSize(new Dimension(200, 100));
+        newGameButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         ActionListenerNewGame actionListenerNewGame = new ActionListenerNewGame(Game.newGame, Game.game.getLastGame());
         newGameButton.addActionListener(actionListenerNewGame);
 
-        gamePanel.setLayout(new GridLayout(2, 2));
+        gamePanel.setLayout(new GridLayout(WINDOW_GRID_SIZE, WINDOW_GRID_SIZE));
         gamePanel.add(player1Field);
         gamePanel.add(textLabel);
         gamePanel.add(player2Field);
@@ -85,7 +90,7 @@ public class GameInterface extends JFrame {
         setVisible(true);
     }
 
-    public void initializeFields() {
+    private void initializeFields() {
         initializeField(player1Field, Game.computer.getField());
         initializeField(player2Field, Game.human.getField());
     }
@@ -95,15 +100,15 @@ public class GameInterface extends JFrame {
             return;
         }
 
-        jPanel.setLayout(new GridLayout(Field.fieldSize + 1, Field.fieldSize + 1));
-        jPanel.setMaximumSize(new Dimension(400, 400));
+        jPanel.setLayout(new GridLayout(Field.FIELD_SIZE + 1, Field.FIELD_SIZE + 1));
+        jPanel.setMaximumSize(new Dimension(PANEL_FIELD_SIZE, PANEL_FIELD_SIZE));
 
         Cell[][] cells = field.getCells();
 
         String alphabet = "АБВГДЕЖЗИК";
 
-        for (int i = - 1; i < Field.fieldSize; i++) {
-            for (int j = - 1; j < Field.fieldSize; j++) {
+        for (int i = - 1; i < Field.FIELD_SIZE; i++) {
+            for (int j = - 1; j < Field.FIELD_SIZE; j++) {
                 if (i == - 1 && j == - 1) {
                     jPanel.add(new JButton(" "));
                 } else if (i == - 1) {
@@ -134,8 +139,8 @@ public class GameInterface extends JFrame {
 
         Cell[][] cells = field.getCells();
 
-        for (int i = 0; i < Field.fieldSize; i++) {
-            for (int j = 0; j < Field.fieldSize; j++) {
+        for (int i = 0; i < Field.FIELD_SIZE; i++) {
+            for (int j = 0; j < Field.FIELD_SIZE; j++) {
                 Cell cell = cells[j][i];
 
                 if (computerField){
