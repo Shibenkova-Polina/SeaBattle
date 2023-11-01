@@ -8,6 +8,8 @@ import java.util.ArrayList;
 
 public class Computer extends Player {
 
+    public static int computerNumberOfWins = 0;
+
     private static final int SLEEP_TIME_SHOT = 500;
     private static final int SLEEP_TIME_AFTER_SHOT = 2000;
     private static final int NUMBER_OF_SHIP_TYPES = 4;

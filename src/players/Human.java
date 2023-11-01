@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 
 public class Human extends Player implements ActionListener {
 
+    public static int humanNumberOfWins = 0;
+
     public Human() {
         super();
         myTurn = true;
