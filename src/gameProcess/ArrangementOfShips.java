@@ -1,8 +1,11 @@
 package gameProcess;
 
+import actionListeners.Run;
 import gameElements.Cell;
 import gameElements.Field;
 import gameElements.Ship;
+import dataBase.DataBase;
+import players.Computer;
 
 import java.util.ArrayList;
 
@@ -11,6 +14,8 @@ public class ArrangementOfShips {
     private static final int NUMBER_OF_SHIP_TYPES = 4;
 
     private static Cell[][] placementField;
+
+    public static int idPlacements = 0;
 
     private enum Orientation {
         HORIZONTAL,
@@ -47,6 +52,23 @@ public class ArrangementOfShips {
                 } while (!validPlace(x, y, shipSize, orientation));
 
                 ships.add(createShip(x, y, shipSize, orientation));
+
+                String orient;
+                if (orientation == Orientation.VERTICAL) {
+                    orient = "Vertival";
+                } else {
+                    orient = "Horizontal";
+                }
+
+                String str;
+                if (!Computer.createFirst ) {
+                    str = "Computer";
+                } else {
+                    str = "Human";
+                }
+                idPlacements += 1;
+
+                DataBase.fill(idPlacements, Game.numberOfGame, str, shipSize, x, y, orient);
             }
         }
 

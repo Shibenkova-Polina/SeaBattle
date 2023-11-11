@@ -16,6 +16,7 @@ public class ActionListenerNewGame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Game.numberOfGame += 1;
         Game.newGame = true;
         Run run = new Run();
 

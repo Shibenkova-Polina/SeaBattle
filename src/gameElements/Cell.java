@@ -44,12 +44,12 @@ public class Cell extends JButton {
         this.ship = ship;
     }
 
-    public void inititalizeState(CellState state){
+    public void inititalizeState(CellState state) {
         this.state = state;
     }
 
     public void getShot() {
-        switch (state){
+        switch (state) {
             case SEA:
                 setState(CellState.MISS);
                 break;
@@ -90,7 +90,7 @@ public class Cell extends JButton {
         return (cell.xCoord == xCoord && cell.yCoord == yCoord);
     }
 
-    public boolean isShip(){
+    public boolean isShip() {
         return state == CellState.SHIP;
     }
 

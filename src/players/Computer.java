@@ -7,10 +7,7 @@ import gui.Messages;
 import java.util.ArrayList;
 
 public class Computer extends Player {
-
-    public static int computerNumberOfWins = 0;
-
-    private static final int SLEEP_TIME_SHOT = 500;
+    private static final int SLEEP_TIME_SHOT = 300;
     private static final int SLEEP_TIME_AFTER_SHOT = 2000;
     private static final int NUMBER_OF_SHIP_TYPES = 4;
     private static final int NUMBER_OF_COORDINATES = 2;
@@ -29,10 +26,13 @@ public class Computer extends Player {
     private int lastX;
     private int lastY;
 
+    public static boolean createFirst;
+
     public Computer() {
         super();
         myTurn = false;
         setEnemyField();
+        createFirst = true;
     }
 
     @Override
@@ -40,6 +40,7 @@ public class Computer extends Player {
         super.newGame();
         myTurn = false;
         setEnemyField();
+        createFirst = true;
     }
 
     private void setEnemyField() {
@@ -198,7 +199,9 @@ public class Computer extends Player {
                 if (enemyCells[i][y].getState() == Cell.CellState.SEA) {
                     rightAims.add(i);
                 }
-            } else break;
+            } else {
+                break;
+            }
         }
 
         for (int i = x - 1; i > x - NUMBER_OF_SHIP_TYPES; --i) {
@@ -210,7 +213,9 @@ public class Computer extends Player {
                 if (enemyCells[i][y].getState() == Cell.CellState.SEA) {
                     leftAims.add(i);
                 }
-            } else break;
+            } else {
+                break;
+            }
         }
 
         for (int i = y - 1; i > y - NUMBER_OF_SHIP_TYPES; --i) {
@@ -222,7 +227,9 @@ public class Computer extends Player {
                 if (enemyCells[x][i].getState() == Cell.CellState.SEA) {
                     upAims.add(i);
                 }
-            } else break;
+            } else {
+                break;
+            }
         }
 
         for (int i = y + 1; i < y + NUMBER_OF_SHIP_TYPES; ++i) {
@@ -234,7 +241,9 @@ public class Computer extends Player {
                 if (enemyCells[x][i].getState() == Cell.CellState.SEA) {
                     downAims.add(i);
                 }
-            } else break;
+            } else {
+                break;
+            }
         }
     }
 

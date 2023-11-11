@@ -11,9 +11,8 @@ public class Run implements Runnable {
     public void run() {
         GameInterface.getInstance().draw();
         Messages.getInstance().getStartMessage();
-        boolean shootComanded = false;
 
-        while(true){
+        while(true) {
             if (Game.newGame) {
                 Game.newGame = false;
                 Game.computer.newGame();
@@ -22,16 +21,12 @@ public class Run implements Runnable {
                 Messages.getInstance().getStartMessage();
             }
 
-            if (Game.computer.moves() && !shootComanded) {
+            if (Game.computer.moves()) {
                 Game.computer.shoot();
-                shootComanded = true;
-            } else {
-                shootComanded = false;
             }
 
             if (Game.computer.getShipsToKill() == 0 || Game.human.getShipsToKill() == 0) {
                 Messages.getInstance().getWinMessage(Game.human.getShipsToKill() == 0);
-
                 break;
             }
 

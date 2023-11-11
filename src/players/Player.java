@@ -16,7 +16,7 @@ public abstract class Player {
         field = new Field();
     }
 
-    public boolean moves(){
+    public boolean moves() {
         return myTurn;
     }
 
@@ -59,8 +59,8 @@ public abstract class Player {
                 default:
                     return null;
             }
-
-        } return null;
+        }
+        return null;
     }
 
     public void newGame() {

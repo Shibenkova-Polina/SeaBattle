@@ -8,12 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Human extends Player implements ActionListener {
-
-    public static int humanNumberOfWins = 0;
-
     public Human() {
         super();
         myTurn = true;
+        Computer.createFirst = false;
     }
 
     @Override
@@ -34,6 +32,7 @@ public class Human extends Player implements ActionListener {
     public void newGame() {
         super.newGame();
         myTurn = true;
+        Computer.createFirst = false;
     }
 
     private void shoot(int x, int y) {
