@@ -1,10 +1,10 @@
-package main.java.actionListeners;
+package actionListeners;
 
-import main.java.dataBase.DataBase;
-import main.java.gameElements.Cell;
-import main.java.gameElements.Field;
-import main.java.gameProcess.ArrangementOfShips;
-import main.java.gameProcess.Game;
+import dataBase.DataBase;
+import gameElements.Cell;
+import gameElements.Field;
+import gameProcess.ArrangementOfShips;
+import gameProcess.Game;
 import players.Computer;
 import players.Human;
 

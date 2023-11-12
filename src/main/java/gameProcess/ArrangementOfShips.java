@@ -1,9 +1,9 @@
-package main.java.gameProcess;
+package gameProcess;
 
-import main.java.dataBase.DataBase;
-import main.java.gameElements.Cell;
-import main.java.gameElements.Field;
-import main.java.gameElements.Ship;
+import dataBase.DataBase;
+import gameElements.Cell;
+import gameElements.Field;
+import gameElements.Ship;
 import players.Computer;
 
 import java.util.ArrayList;
@@ -13,6 +13,7 @@ public class ArrangementOfShips {
     private static final int NUMBER_OF_SHIP_TYPES = 4;
 
     public static Cell[][] placementField;
+
     public static int idPlacements = 0;
 
     public enum Orientation {
@@ -66,6 +67,7 @@ public class ArrangementOfShips {
                 }
 
                 idPlacements += 1;
+
                 DataBase.fillBD_2(idPlacements, str, shipSize, x, y, orient);
 
             }
@@ -85,7 +87,6 @@ public class ArrangementOfShips {
             int y = Integer.parseInt(coord[1]);
             int size = Integer.parseInt(coord[2]);
             ArrangementOfShips.Orientation orient = ArrangementOfShips.Orientation.valueOf(coord[3]);
-
             ships.add(createShip(x, y, size, orient));
         }
 

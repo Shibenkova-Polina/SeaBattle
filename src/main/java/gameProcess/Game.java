@@ -1,6 +1,6 @@
-package main.java.gameProcess;
+package gameProcess;
 
-import main.java.actionListeners.Run;
+import actionListeners.Run;
 import players.Computer;
 import players.Human;
 

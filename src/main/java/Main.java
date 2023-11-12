@@ -1,5 +1,5 @@
-import main.java.gameProcess.ArrangementOfShips;
-import main.java.gameProcess.Game;
+import gameProcess.ArrangementOfShips;
+import gameProcess.Game;
 
 public class Main {
     public static void main(String[] args) {

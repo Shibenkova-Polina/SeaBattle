@@ -1,8 +1,8 @@
-package main.java.actionListeners;
+package actionListeners;
 
-import main.java.dataBase.DataBase;
-import main.java.gameProcess.ArrangementOfShips;
-import main.java.gameProcess.Game;
+import dataBase.DataBase;
+import gameProcess.ArrangementOfShips;
+import gameProcess.Game;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
