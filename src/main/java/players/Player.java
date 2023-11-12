@@ -1,7 +1,7 @@
 package players;
 
-import gameElements.Cell;
-import gameElements.Field;
+import main.java.gameElements.Cell;
+import main.java.gameElements.Field;
 
 public abstract class Player {
     public static final int NUMBER_OF_PLAYER_SHIPS = 10;

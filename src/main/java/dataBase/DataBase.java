@@ -1,6 +1,6 @@
-package dataBase;
+package main.java.dataBase;
 
-import gameElements.Field;
+import main.java.gameElements.Field;
 
 import java.sql.*;
 import java.util.HashMap;

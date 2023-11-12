@@ -1,4 +1,4 @@
-package gui;
+package main.java.gui;
 
 import players.Computer;
 import players.Human;

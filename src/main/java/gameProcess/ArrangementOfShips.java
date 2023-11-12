@@ -1,9 +1,9 @@
-package gameProcess;
+package main.java.gameProcess;
 
-import dataBase.DataBase;
-import gameElements.Cell;
-import gameElements.Field;
-import gameElements.Ship;
+import main.java.dataBase.DataBase;
+import main.java.gameElements.Cell;
+import main.java.gameElements.Field;
+import main.java.gameElements.Ship;
 import players.Computer;
 
 import java.util.ArrayList;

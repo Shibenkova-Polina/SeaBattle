@@ -1,4 +1,4 @@
-package gameElements;
+package main.java.gameElements;
 
 import java.util.ArrayList;
 public class Ship {

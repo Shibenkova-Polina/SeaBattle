@@ -1,8 +1,8 @@
-package actionListeners;
+package main.java.actionListeners;
 
-import gui.GameInterface;
-import gui.Messages;
-import gameProcess.Game;
+import main.java.gui.GameInterface;
+import main.java.gui.Messages;
+import main.java.gameProcess.Game;
 
 public class Run implements Runnable {
     private static final int SLEEP_TIME = 10;

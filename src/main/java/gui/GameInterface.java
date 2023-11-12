@@ -1,9 +1,9 @@
-package gui;
+package main.java.gui;
 
-import actionListeners.*;
-import gameElements.Cell;
-import gameElements.Field;
-import gameProcess.Game;
+import main.java.actionListeners.*;
+import main.java.gameElements.Cell;
+import main.java.gameElements.Field;
+import main.java.gameProcess.Game;
 
 import javax.swing.*;
 import java.awt.*;

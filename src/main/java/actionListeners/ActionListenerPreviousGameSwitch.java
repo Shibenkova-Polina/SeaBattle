@@ -1,18 +1,16 @@
-package actionListeners;
+package main.java.actionListeners;
 
-import dataBase.DataBase;
-import gameElements.Cell;
-import gameElements.Field;
-import gameElements.Ship;
-import gameProcess.ArrangementOfShips;
-import gameProcess.Game;
+import main.java.dataBase.DataBase;
+import main.java.gameElements.Cell;
+import main.java.gameElements.Field;
+import main.java.gameProcess.ArrangementOfShips;
+import main.java.gameProcess.Game;
 import players.Computer;
 import players.Human;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Map;
 
 public class ActionListenerPreviousGameSwitch implements ActionListener {

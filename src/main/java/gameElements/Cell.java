@@ -1,6 +1,6 @@
-package gameElements;
+package main.java.gameElements;
 
-import gui.GameInterface;
+import main.java.gui.GameInterface;
 
 import javax.swing.*;
 import java.util.ArrayList;

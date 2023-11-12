@@ -1,6 +1,6 @@
-package gameElements;
+package main.java.gameElements;
 
-import gameProcess.ArrangementOfShips;
+import main.java.gameProcess.ArrangementOfShips;
 
 public class Field {
     public static final int FIELD_SIZE = 10;

@@ -1,8 +1,8 @@
 package players;
 
-import gameElements.Cell;
-import gameElements.Field;
-import gui.Messages;
+import main.java.gameElements.Cell;
+import main.java.gameElements.Field;
+import main.java.gui.Messages;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

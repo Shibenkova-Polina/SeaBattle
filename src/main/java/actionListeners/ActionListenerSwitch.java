@@ -1,9 +1,9 @@
-package actionListeners;
+package main.java.actionListeners;
 
-import dataBase.DataBase;
-import gameElements.Cell;
-import gameElements.Field;
-import gameProcess.Game;
+import main.java.dataBase.DataBase;
+import main.java.gameElements.Cell;
+import main.java.gameElements.Field;
+import main.java.gameProcess.Game;
 import players.Computer;
 import players.Human;
 
