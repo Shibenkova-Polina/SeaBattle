@@ -1,10 +1,9 @@
 package gameProcess;
 
-import actionListeners.Run;
+import dataBase.DataBase;
 import gameElements.Cell;
 import gameElements.Field;
 import gameElements.Ship;
-import dataBase.DataBase;
 import players.Computer;
 
 import java.util.ArrayList;
@@ -13,11 +12,10 @@ public class ArrangementOfShips {
     private static final int NUMBER_OF_ORIENTATIONS = 2;
     private static final int NUMBER_OF_SHIP_TYPES = 4;
 
-    private static Cell[][] placementField;
-
+    public static Cell[][] placementField;
     public static int idPlacements = 0;
 
-    private enum Orientation {
+    public enum Orientation {
         HORIZONTAL,
         VERTICAL
     }
@@ -55,9 +53,9 @@ public class ArrangementOfShips {
 
                 String orient;
                 if (orientation == Orientation.VERTICAL) {
-                    orient = "Vertival";
+                    orient = "VERTICAL";
                 } else {
-                    orient = "Horizontal";
+                    orient = "HORIZONTAL";
                 }
 
                 String str;
@@ -66,15 +64,34 @@ public class ArrangementOfShips {
                 } else {
                     str = "Human";
                 }
-                idPlacements += 1;
 
-                DataBase.fill(idPlacements, Game.numberOfGame, str, shipSize, x, y, orient);
+                idPlacements += 1;
+                DataBase.fillBD_2(idPlacements, str, shipSize, x, y, orient);
+
             }
         }
 
         field.setCells(placementField);
         placementField = null;
     }
+
+    public static void createPrevShips(Field field, String[] data) {
+        ArrayList<Ship> ships = new ArrayList<>();
+
+        for (int i = 0; i < Field.FIELD_SIZE; i++) {
+            String str = data[i];
+            String[] coord = str.split(" ");
+            int x = Integer.parseInt(coord[0]);
+            int y = Integer.parseInt(coord[1]);
+            int size = Integer.parseInt(coord[2]);
+            ArrangementOfShips.Orientation orient = ArrangementOfShips.Orientation.valueOf(coord[3]);
+
+            ships.add(createShip(x, y, size, orient));
+        }
+
+        field.setCells(placementField);
+        placementField = null;
+        }
 
     private static boolean validPlace(int x, int y, int size, Orientation orientation) {
         int xFrom = x - 1;
@@ -125,7 +142,7 @@ public class ArrangementOfShips {
         return true;
     }
 
-    private static Ship createShip(int x, int y, int size, Orientation orientation) {
+    public static Ship createShip(int x, int y, int size, Orientation orientation) {
         int xTo;
         int yTo;
 

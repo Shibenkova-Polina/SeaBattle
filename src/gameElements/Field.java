@@ -13,9 +13,6 @@ public class Field {
                 cells[j][i] = new Cell(j, i, Cell.CellState.SEA, null);
             }
         }
-
-        ArrangementOfShips.setPlacementField(cells);
-        ArrangementOfShips.createShips(this);
     }
 
     public Cell[][] getCells() {

@@ -8,9 +8,8 @@ public abstract class Player {
 
     public Player opponent;
     public boolean myTurn;
-    public int shipsToKill = NUMBER_OF_PLAYER_SHIPS;
     public ShootResult shootResult;
-    private Field field;
+    private final Field field;
 
     public Player() {
         field = new Field();
@@ -18,10 +17,6 @@ public abstract class Player {
 
     public boolean moves() {
         return myTurn;
-    }
-
-    public int getShipsToKill() {
-        return shipsToKill;
     }
 
     public Field getField() {
@@ -65,6 +60,5 @@ public abstract class Player {
 
     public void newGame() {
         field.resetCells();
-        shipsToKill = NUMBER_OF_PLAYER_SHIPS;
     }
 }

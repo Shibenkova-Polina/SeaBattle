@@ -1,8 +1,6 @@
 package gui;
 
-import actionListeners.ActionListenerExit;
-import actionListeners.ActionListenerNewGame;
-import actionListeners.ActionListenerSwitch;
+import actionListeners.*;
 import gameElements.Cell;
 import gameElements.Field;
 import gameProcess.Game;
@@ -47,14 +45,17 @@ public class GameInterface extends JFrame {
         setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JButton start = new JButton("Начать игру");
+        JButton start = new JButton("Начать новую игру");
         start.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         JButton exit = new JButton("Выйти");
         exit.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
+        JButton resume = new JButton("Продолжить прошлую игру");
+        resume.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
         JLabel picture = new JLabel(this.picture);
         panelStart.add(start);
-        panelStart.add(picture);
+        panelStart.add(resume);
         panelStart.add(exit);
+        panelStart.add(picture);
 
         cardPanel.add(panelStart, "start");
         cardPanel.add(gamePanel, "play");
@@ -62,7 +63,8 @@ public class GameInterface extends JFrame {
 
         ActionListenerExit actionListenerExit = new ActionListenerExit();
         exit.addActionListener(actionListenerExit);
-        start.addActionListener(new ActionListenerSwitch(cardLayout, cardPanel, "play"));
+        resume.addActionListener(new ActionListenerPreviousGameSwitch(cardLayout, cardPanel, "play"));
+        start.addActionListener(new ActionListenerNewGameSwitch(cardLayout, cardPanel, "play", Game.newGame, Game.game.getLastGame()));
 
         JButton backToMenu = new JButton("Вернуться в меню");
         backToMenu.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));

@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Human extends Player implements ActionListener {
+    public static int humanNumberOfWins = 0;
+    public static int shipsToKill = NUMBER_OF_PLAYER_SHIPS;
+
     public Human() {
         super();
         myTurn = true;
@@ -33,6 +36,15 @@ public class Human extends Player implements ActionListener {
         super.newGame();
         myTurn = true;
         Computer.createFirst = false;
+        shipsToKill = NUMBER_OF_PLAYER_SHIPS;
+    }
+
+    public static int getShipsToKill() {
+        return shipsToKill;
+    }
+
+    public static void setShipsToKill(int num) {
+        shipsToKill = num;
     }
 
     private void shoot(int x, int y) {

@@ -8,7 +8,6 @@ public class Game {
 
     private static Thread lastGame;
     public static boolean newGame = false;
-    public static int numberOfGame = 1;
 
     public static Computer computer = new Computer();
     public static Human human = new Human();

@@ -4,13 +4,22 @@ import dataBase.DataBase;
 import gameProcess.ArrangementOfShips;
 import gameProcess.Game;
 
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ActionListenerNewGame implements ActionListener {
+public class ActionListenerNewGameSwitch implements ActionListener {
+    private CardLayout cardLayout;
+    private String panelNameToSwitchTo;
+    private Container container;
+
     private Thread lastGame;
 
-    public ActionListenerNewGame(boolean newGame, Thread lastGame) {
+    public ActionListenerNewGameSwitch(CardLayout cardLayout, Container container, String panelNameToSwitchTo, boolean newGame, Thread lastGame) {
+        this.cardLayout = cardLayout;
+        this.panelNameToSwitchTo = panelNameToSwitchTo;
+        this.container = container;
+
         this.lastGame = lastGame;
     }
 
@@ -19,6 +28,7 @@ public class ActionListenerNewGame implements ActionListener {
         ArrangementOfShips.idPlacements = 0;
         DataBase.clearBD();
         DataBase.clearBD_2();
+        cardLayout.show(container, panelNameToSwitchTo);
 
         Game.newGame = true;
         Run run = new Run();

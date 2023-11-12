@@ -53,8 +53,10 @@ public class Messages {
     public void getWinMessage(boolean humanWin) {
         if (humanWin) {
             GameInterface.textLabel.setText("Игра окончена. Ты победил! Поздравляю!");
+            Human.humanNumberOfWins += 1;
         } else {
             GameInterface.textLabel.setText("Игра окончена. Компьютер победил. Возьми реванш...");
+            Computer.computerNumberOfWins += 1;
         }
     }
 }
