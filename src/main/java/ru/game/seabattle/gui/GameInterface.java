@@ -1,6 +1,10 @@
 package ru.game.seabattle.gui;
 
-import ru.game.seabattle.action.listeners.*;
+import ru.game.seabattle.action.listeners.ActionListenerExit;
+import ru.game.seabattle.action.listeners.ActionListenerNewGame;
+import ru.game.seabattle.action.listeners.ActionListenerNewGameSwitch;
+import ru.game.seabattle.action.listeners.ActionListenerSwitch;
+import ru.game.seabattle.action.listeners.ActionListenerPreviousGameSwitch;
 import ru.game.seabattle.elements.Cell;
 import ru.game.seabattle.elements.Field;
 import ru.game.seabattle.process.Game;
@@ -20,30 +24,32 @@ public class GameInterface extends JFrame {
     private JPanel cardPanel = new JPanel(cardLayout);
 
     private JPanel panelStart = new JPanel();
-    private JPanel player1Field = new JPanel();
-    private JPanel player2Field = new JPanel();
+    private JPanel humanField = new JPanel();
+    private JPanel computerField = new JPanel();
     private JPanel gamePanel = new JPanel();
     private JPanel buttonPanel = new JPanel();
 
     private JPanel buttonAlignment = new JPanel(new GridBagLayout());
     private GridBagConstraints constraints = new GridBagConstraints();
 
-    private final ImageIcon ship = new ImageIcon((GameInterface.class.getResource("icons/ship.png")));
-    private final ImageIcon kill = new ImageIcon((GameInterface.class.getResource("icons/kill.png")));
-    private final ImageIcon injure = new ImageIcon(GameInterface.class.getResource("icons/injure.png"));
-    private final ImageIcon miss = new ImageIcon(GameInterface.class.getResource("icons/miss.png"));
-    private final ImageIcon sea = new ImageIcon(GameInterface.class.getResource("icons/sea.png"));
-    private final ImageIcon picture = new ImageIcon(GameInterface.class.getResource("icons/picture.png"));
+    private JLabel textLabel = new JLabel();
+
+    private final ImageIcon ship = new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("icons/ship.png"));
+    private final ImageIcon kill = new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("icons/kill.png"));
+    private final ImageIcon injure = new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("icons/injure.png"));
+    private final ImageIcon miss = new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("icons/miss.png"));
+    private final ImageIcon sea = new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("icons/sea.png"));
+    private final ImageIcon picture = new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("icons/picture.png"));
 
     private static GameInterface instance;
-
-    public static JLabel textLabel = new JLabel();
+    Game game = Game.getInstance();
 
     private GameInterface() {
         super("Морской бой");
         setSize(INTERFACE_WIDTH, INTERFACE_HEIGHT);
         setResizable(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
 
         JButton start = new JButton("Начать новую игру");
         start.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
@@ -64,7 +70,7 @@ public class GameInterface extends JFrame {
         ActionListenerExit actionListenerExit = new ActionListenerExit();
         exit.addActionListener(actionListenerExit);
         resume.addActionListener(new ActionListenerPreviousGameSwitch(cardLayout, cardPanel, "play"));
-        start.addActionListener(new ActionListenerNewGameSwitch(cardLayout, cardPanel, "play", Game.newGame, Game.game.getLastGame()));
+        start.addActionListener(new ActionListenerNewGameSwitch(cardLayout, cardPanel, "play", game.getNewGame(), game.getLastGame()));
 
         JButton backToMenu = new JButton("Вернуться в меню");
         backToMenu.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
@@ -76,13 +82,13 @@ public class GameInterface extends JFrame {
 
         JButton newGameButton = new JButton("Новая игра");
         newGameButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-        ActionListenerNewGame actionListenerNewGame = new ActionListenerNewGame(Game.newGame, Game.game.getLastGame());
+        ActionListenerNewGame actionListenerNewGame = new ActionListenerNewGame(game.getNewGame(), game.getLastGame());
         newGameButton.addActionListener(actionListenerNewGame);
 
         gamePanel.setLayout(new GridLayout(WINDOW_GRID_SIZE, WINDOW_GRID_SIZE));
-        gamePanel.add(player1Field);
+        gamePanel.add(humanField);
         gamePanel.add(textLabel);
-        gamePanel.add(player2Field);
+        gamePanel.add(computerField);
         gamePanel.add(buttonAlignment);
 
         buttonPanel.add(newGameButton, BorderLayout.CENTER);
@@ -93,8 +99,8 @@ public class GameInterface extends JFrame {
     }
 
     private void initializeFields() {
-        initializeField(player1Field, Game.computer.getField());
-        initializeField(player2Field, Game.human.getField());
+        initializeField(humanField, game.getComputer().getField());
+        initializeField(computerField, game.getHuman().getField());
     }
 
     private void initializeField(JPanel jPanel, Field field) {
@@ -126,9 +132,22 @@ public class GameInterface extends JFrame {
         }
     }
 
+    public static GameInterface getInstance() {
+        if (instance == null) {
+            instance = new GameInterface();
+        }
+
+        return instance;
+    }
+
+
+    public void setTextLabel(String text) {
+        textLabel.setText(text);
+    }
+
     public void draw() {
-        Field humanField = Game.human.getField();
-        Field computerField = Game.computer.getField();
+        Field humanField = game.getHuman().getField();
+        Field computerField = game.getComputer().getField();
 
         updateField(humanField, false);
         updateField(computerField, true);
@@ -197,13 +216,5 @@ public class GameInterface extends JFrame {
                     break;
             }
         }
-    }
-
-    public static GameInterface getInstance() {
-        if (instance == null) {
-            instance = new GameInterface();
-        }
-
-        return instance;
     }
 }

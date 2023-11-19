@@ -1,10 +1,10 @@
 package ru.game.seabattle.action.listeners;
 
-import ru.game.seabattle.database.DataBase;
 import ru.game.seabattle.elements.Cell;
 import ru.game.seabattle.elements.Field;
 import ru.game.seabattle.process.ArrangementOfShips;
 import ru.game.seabattle.process.Game;
+import ru.game.seabattle.database.MyDataBase;
 import ru.game.seabattle.players.Computer;
 import ru.game.seabattle.players.Human;
 
@@ -18,6 +18,9 @@ public class ActionListenerPreviousGameSwitch implements ActionListener {
     private final String panelNameToSwitchTo;
     private final Container container;
 
+    ArrangementOfShips arrangementOfShips = ArrangementOfShips.getInstance();
+    MyDataBase myDataBase = MyDataBase.getInstance();
+
     public ActionListenerPreviousGameSwitch(CardLayout cardLayout, Container container, String panelNameToSwitchTo) {
         this.cardLayout = cardLayout;
         this.panelNameToSwitchTo = panelNameToSwitchTo;
@@ -28,8 +31,8 @@ public class ActionListenerPreviousGameSwitch implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         cardLayout.show(container, panelNameToSwitchTo);
 
-        Field humanField = Game.human.getField();
-        Field computerField = Game.computer.getField();
+        Field humanField = Game.getInstance().getHuman().getField();
+        Field computerField = Game.getInstance().getComputer().getField();
 
         resumeFieldHuman(humanField);
         resumeFieldComputer(computerField);
@@ -40,15 +43,15 @@ public class ActionListenerPreviousGameSwitch implements ActionListener {
             return;
         }
 
-        String[] data_2 = DataBase.getDataHuman_2();
+        String[] data_2 = myDataBase.getHumanShips();
 
-        ArrangementOfShips.setPlacementField(field.getCells());
-        ArrangementOfShips.createPrevShips(field, data_2);
+        arrangementOfShips.setPlacementField(field.getCells());
+        arrangementOfShips.createPrevShips(field, data_2);
 
-        Map<String, String> data = DataBase.getDataHuman();
+        Map<String, String> data = myDataBase.getHumanCells();
         String str = data.get("0");
         int num = Integer.parseInt((str.trim().split(" ")[10]));
-        Human.setShipsToKill(num);
+        Human.getInstance().setShipsToKill(num);
         setCellCtate(field, data);
     }
 
@@ -57,19 +60,20 @@ public class ActionListenerPreviousGameSwitch implements ActionListener {
             return;
         }
 
-        String[] data_2 = DataBase.getDataComputer_2();
+        MyDataBase myDataBase = MyDataBase.getInstance();
+        String[] data_2 = myDataBase.getComputerShips();
 
-        ArrangementOfShips.setPlacementField(field.getCells());
-        ArrangementOfShips.createPrevShips(field, data_2);
+        arrangementOfShips.setPlacementField(field.getCells());
+        arrangementOfShips.createPrevShips(field, data_2);
 
-        Map<String, String> data = DataBase.getDataComputer();
+        Map<String, String> data = myDataBase.getComputerCells();
         String str = data.get("0");
         int num = Integer.parseInt((str.trim().split(" ")[10]));
-        Computer.setShipsToKill(num);
+        Computer.getInstance().setShipsToKill(num);
         setCellCtate(field, data);
     }
 
-    private static void setCellCtate(Field field, Map<String, String> data) {
+    private void setCellCtate(Field field, Map<String, String> data) {
         Cell[][] cells = field.getCells();
 
         for (int i = 0; i < Field.FIELD_SIZE; i++) {

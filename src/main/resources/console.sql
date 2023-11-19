@@ -12,6 +12,3 @@ create table ships
     Player text not null,
     Data text not null
 );
-
-DELETE FROM cells;
-DELETE FROM ships;

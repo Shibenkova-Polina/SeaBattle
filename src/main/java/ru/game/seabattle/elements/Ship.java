@@ -2,7 +2,6 @@ package ru.game.seabattle.elements;
 
 import java.util.ArrayList;
 public class Ship {
-
     private ArrayList<Cell> cells;
     private ArrayList<Cell> borders;
 

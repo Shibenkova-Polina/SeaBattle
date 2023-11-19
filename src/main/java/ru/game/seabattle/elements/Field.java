@@ -30,7 +30,8 @@ public class Field {
             }
         }
 
-        ArrangementOfShips.setPlacementField(cells);
-        ArrangementOfShips.createShips(this);
+        ArrangementOfShips arrangementOfShips = ArrangementOfShips.getInstance();
+        arrangementOfShips.setPlacementField(cells);
+        arrangementOfShips.createShips(this);
     }
 }

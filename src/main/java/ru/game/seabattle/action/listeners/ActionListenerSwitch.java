@@ -1,9 +1,10 @@
 package ru.game.seabattle.action.listeners;
 
-import ru.game.seabattle.database.DataBase;
 import ru.game.seabattle.elements.Cell;
 import ru.game.seabattle.elements.Field;
 import ru.game.seabattle.process.Game;
+import ru.game.seabattle.database.MyDataBase;
+import ru.game.seabattle.persistence.DBPersistence;
 import ru.game.seabattle.players.Computer;
 import ru.game.seabattle.players.Human;
 
@@ -17,6 +18,7 @@ public class ActionListenerSwitch implements ActionListener {
     private final String panelNameToSwitchTo;
     private final Container container;
     private int id = 1;
+    DBPersistence dbPersistence = new DBPersistence();
 
     public ActionListenerSwitch(CardLayout cardLayout, Container container, String panelNameToSwitchTo) {
         this.cardLayout = cardLayout;
@@ -28,10 +30,12 @@ public class ActionListenerSwitch implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         cardLayout.show(container, panelNameToSwitchTo);
 
-        Field humanField = Game.human.getField();
-        Field computerField = Game.computer.getField();
+        Game game = Game.getInstance();
 
-        DataBase.clearBD();
+        Field humanField = game.getHuman().getField();
+        Field computerField = game.getComputer().getField();
+
+        MyDataBase.getInstance().clearCells();
         fillDB(humanField, false);
         fillDB(computerField, true);
 
@@ -56,7 +60,7 @@ public class ActionListenerSwitch implements ActionListener {
                     states.append(" ");
                     states.append(cellState);
                 }
-                DataBase.fillBD(id, "Computer", states, i, Computer.getShipsToKill());
+                dbPersistence.createCells(id, "Computer", states, i, Computer.getInstance().getShipsToKill());
                 this.id += 1;
             }
         } else {
@@ -70,7 +74,7 @@ public class ActionListenerSwitch implements ActionListener {
                     states.append(" ");
                     states.append(cellState);
                 }
-                DataBase.fillBD(id, "Human", states, i, Human.getShipsToKill());
+                dbPersistence.createCells(id, "Human", states, i, Human.getInstance().getShipsToKill());
                 this.id += 1;
             }
         }

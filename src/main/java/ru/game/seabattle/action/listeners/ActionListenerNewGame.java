@@ -1,9 +1,9 @@
 package ru.game.seabattle.action.listeners;
 
-import ru.game.seabattle.database.DataBase;
+import ru.game.seabattle.action.Run;
 import ru.game.seabattle.process.ArrangementOfShips;
 import ru.game.seabattle.process.Game;
-import ru.game.seabattle.action.Run;
+import ru.game.seabattle.database.MyDataBase;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,11 +17,13 @@ public class ActionListenerNewGame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ArrangementOfShips.idPlacements = 0;
-        DataBase.clearBD();
-        DataBase.clearBD_2();
+        ArrangementOfShips.getInstance().setIdPlacements(0);
+        MyDataBase myDataBase = MyDataBase.getInstance();
 
-        Game.newGame = true;
+        myDataBase.clearCells();
+        myDataBase.clearShips();
+
+        Game.getInstance().setNewGame(true);
         Run run = new Run();
 
         if (!lastGame.isAlive()) {

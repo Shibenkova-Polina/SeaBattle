@@ -1,0 +1,261 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+class ActionListenerExit {
+  + actionPerformed(ActionEvent): void
+}
+class ActionListenerNewGame {
+  - lastGame: Thread
+  + actionPerformed(ActionEvent): void
+}
+class ActionListenerNewGameSwitch {
+  - cardLayout: CardLayout
+  - panelNameToSwitchTo: String
+  - container: Container
+  - lastGame: Thread
+  + actionPerformed(ActionEvent): void
+}
+class ActionListenerPreviousGameSwitch {
+  ~ arrangementOfShips: ArrangementOfShips
+  ~ myDataBase: MyDataBase
+  - container: Container
+  - cardLayout: CardLayout
+  - panelNameToSwitchTo: String
+  + resumeFieldComputer(Field): void
+  + actionPerformed(ActionEvent): void
+  + resumeFieldHuman(Field): void
+  - setCellCtate(Field, Map<String, String>): void
+}
+class ActionListenerSwitch {
+  - cardLayout: CardLayout
+  - id: int
+  ~ dbPersistence: DBPersistence
+  - panelNameToSwitchTo: String
+  - container: Container
+  + actionPerformed(ActionEvent): void
+  - fillDB(Field, boolean): void
+}
+class ArrangementOfShips {
+  + placementField: Cell[][]
+  - idPlacements: int
+  - instance: ArrangementOfShips
+  - validPlace(int, int, int, Orientation): boolean
+  + createPrevShips(Field, String[]): void
+  - createShip(int, int, int, Orientation): void
+  + getInstance(): ArrangementOfShips
+  + setPlacementField(Cell[][]): void
+  + setIdPlacements(int): void
+  + createShips(Field): void
+}
+class Cell {
+  - ship: Ship
+  - state: CellState
+  - xCoord: int
+  - yCoord: int
+  + getYCoord(): int
+  - conditionOfShip(): boolean
+  + setState(CellState): void
+  + getXCoord(): int
+  + equals(Object): boolean
+  + isShip(): boolean
+  + getState(): CellState
+  + inititalizeState(CellState): void
+  + getShot(): void
+  + setShip(Ship): void
+}
+class Computer {
+  - creationBD: boolean
+  - leftAims: ArrayList<Integer>
+  - lastX: int
+  - upAims: ArrayList<Integer>
+  - aimsCalculated: boolean
+  - instance: Computer
+  - downAims: ArrayList<Integer>
+  - lastY: int
+  - currentAims: ArrayList<Integer>
+  - enemyCells: Cell[][]
+  - shootToPotentialAims: boolean
+  - rightAims: ArrayList<Integer>
+  - shipsToKill: int
+  - setEnemyField(): void
+  - getNextCoordinates(): int[]
+  - afterShot(int, int): void
+  + setShipsToKill(int): void
+  - getRandomCoordinates(): int[]
+  + setCreationBD(boolean): void
+  - markKilled(int, int): void
+  + getInstance(): Computer
+  + getCreationBD(): boolean
+  - calculateAims(): void
+  - clearAims(): void
+  + getShipsToKill(): int
+  - getCoordinates(): int[]
+  + newGame(): void
+  + shoot(): void
+}
+class DBPersistence {
+  - db: MyDataBase
+  + createCells(int, String, StringBuilder, int, int): void
+  + createShips(int, String, int, int, int, String): void
+}
+class DatabaseProperties {
+  + getUrl(): String
+  + getPassword(): String
+  + getLogin(): String
+}
+class Field {
+  + FIELD_SIZE: int
+  - cells: Cell[][]
+  + getCells(): Cell[][]
+  + setCells(Cell[][]): void
+  + resetCells(): void
+}
+class Game {
+  - newGame: boolean
+  - lastGame: Thread
+  - instance: Game
+  - human: Human
+  - computer: Computer
+  + getHuman(): Human
+  + getLastGame(): Thread
+  + getNewGame(): boolean
+  + getComputer(): Computer
+  + setNewGame(boolean): void
+  + playGame(): void
+  + getInstance(): Game
+}
+class GameInterface {
+  - miss: ImageIcon
+  - kill: ImageIcon
+  - ship: ImageIcon
+  - textLabel: JLabel
+  - panelStart: JPanel
+  - injure: ImageIcon
+  - gamePanel: JPanel
+  - cardLayout: CardLayout
+  ~ game: Game
+  - cardPanel: JPanel
+  - sea: ImageIcon
+  - picture: ImageIcon
+  - instance: GameInterface
+  - humanField: JPanel
+  - computerField: JPanel
+  - buttonPanel: JPanel
+  - constraints: GridBagConstraints
+  - buttonAlignment: JPanel
+  + setTextLabel(String): void
+  + getInstance(): GameInterface
+  - updateField(Field, boolean): void
+  - updateHumanCell(Cell): void
+  - initializeFields(): void
+  - initializeField(JPanel, Field): void
+  + draw(): void
+  - updateComputerCell(Cell): void
+}
+class Human {
+  - instance: Human
+  - shipsToKill: int
+  + setShipsToKill(int): void
+  + actionPerformed(ActionEvent): void
+  - shoot(int, int): void
+  + newGame(): void
+  + getShipsToKill(): int
+  - afterShot(): void
+  + getInstance(): Human
+  + setOpponent(Player): void
+  + setActionListnerToCells(): void
+}
+class Main {
+  + main(String[]): void
+}
+class Messages {
+  - instance: Messages
+  - gameInterface: GameInterface
+  + getInstance(): Messages
+  + getStartMessage(): void
+  + getWinMessage(boolean): void
+  + getMessage(boolean, ShootResult): void
+}
+class MyDataBase {
+  - instanse: MyDataBase
+  - properties: DatabaseProperties
+  + clearCells(): void
+  + getHumanShips(): String[]
+  - init(): void
+  - createShips(): void
+  + execute(String): void
+  + getHumanCells(): Map<String, String>
+  + clearShips(): void
+  + getComputerShips(): String[]
+  - connectShips(String, String[]): void
+  - connect(): Connection
+  - conectCells(String, Map<String, String>): void
+  + getComputerCells(): Map<String, String>
+  - createCells(): void
+  + getInstance(): MyDataBase
+}
+class Player {
+  + shootResult: ShootResult
+  + myTurn: boolean
+  - field: Field
+  + opponent: Player
+  + getField(): Field
+  + setOpponent(Player): void
+  + newGame(): void
+  + switchPlayers(): void
+  + getShot(int, int): ShootResult
+  + moves(): boolean
+}
+class PropertiesFactory {
+  - properties: DatabaseProperties
+  + getProperties(): DatabaseProperties
+  - init(): void
+}
+class Run {
+  + run(): void
+}
+class Ship {
+  - cells: ArrayList<Cell>
+  - borders: ArrayList<Cell>
+  + getCells(): ArrayList<Cell>
+  + setBorders(ArrayList<Cell>): void
+  + sink(): void
+  + setCells(ArrayList<Cell>): void
+}
+
+Game <.. Main
+Human --|> Player
+Computer --|> Player
+
+Computer --* Game
+Human --* Game
+Field --* Player
+Cell --* Field
+Cell --* Ship
+Computer --> Cell
+
+ArrangementOfShips *-- Cell
+
+ActionListenerNewGame ..> Run
+ActionListenerNewGameSwitch ..> Run
+Game ..> Run
+
+Computer -->  Messages
+Human  -->  Messages
+Run  -->  Messages
+
+GameInterface  ..>  ActionListenerExit
+GameInterface  ..>  ActionListenerNewGame
+GameInterface  ..>  ActionListenerNewGameSwitch
+GameInterface  ..>  ActionListenerPreviousGameSwitch
+GameInterface  ..>  ActionListenerSwitch
+
+PropertiesFactory *-- DatabaseProperties
+MyDataBase *-- DatabaseProperties
+ActionListenerPreviousGameSwitch -->  MyDataBase
+ActionListenerSwitch  ..>  DBPersistence
+ArrangementOfShips  ..>  DBPersistence
+DBPersistence  -->  MyDataBase
+
+ActionListenerPreviousGameSwitch -->  ArrangementOfShips
+@enduml

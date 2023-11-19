@@ -1,9 +1,9 @@
 package ru.game.seabattle.action.listeners;
 
-import ru.game.seabattle.database.DataBase;
+import ru.game.seabattle.action.Run;
 import ru.game.seabattle.process.ArrangementOfShips;
 import ru.game.seabattle.process.Game;
-import ru.game.seabattle.action.Run;
+import ru.game.seabattle.database.MyDataBase;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,12 +26,14 @@ public class ActionListenerNewGameSwitch implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        ArrangementOfShips.idPlacements = 0;
-        DataBase.clearBD();
-        DataBase.clearBD_2();
+        ArrangementOfShips.getInstance().setIdPlacements(0);
+        MyDataBase myDataBase = MyDataBase.getInstance();
+
+        myDataBase.clearCells();
+        myDataBase.clearShips();
         cardLayout.show(container, panelNameToSwitchTo);
 
-        Game.newGame = true;
+        Game.getInstance().setNewGame(true);
         Run run = new Run();
 
         if (!lastGame.isAlive()) {

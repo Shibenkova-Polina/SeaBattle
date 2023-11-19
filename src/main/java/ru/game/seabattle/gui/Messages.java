@@ -1,12 +1,10 @@
 package ru.game.seabattle.gui;
 
-import ru.game.seabattle.players.Computer;
-import ru.game.seabattle.players.Human;
 import ru.game.seabattle.players.Player;
 
 public class Messages {
-
     private static Messages instance;
+    private final GameInterface gameInterface = GameInterface.getInstance();
 
     public static Messages getInstance() {
         if (instance == null)
@@ -15,7 +13,7 @@ public class Messages {
     }
 
     public void getStartMessage(){
-        GameInterface.textLabel.setText("Твой ход");
+        gameInterface.setTextLabel("Твой ход");
     }
 
     public void getMessage(boolean human, Player.ShootResult shootResult) {
@@ -26,25 +24,25 @@ public class Messages {
         if (human) {
             switch (shootResult) {
                 case MISS:
-                    GameInterface.textLabel.setText("Ты промахнулся");
+                    gameInterface.setTextLabel("Ты промахнулся");
                     break;
                 case INJURE:
-                    GameInterface.textLabel.setText("Отличный выстрел! Продолжай!");
+                    gameInterface.setTextLabel("Отличный выстрел! Продолжай!");
                     break;
                 case KILL:
-                    GameInterface.textLabel.setText("Ты уничтожил корабль противника! Поздравляю! Продолжай!");
+                    gameInterface.setTextLabel("Ты уничтожил корабль противника! Поздравляю! Продолжай!");
                     break;
             }
         } else {
             switch (shootResult) {
                 case MISS:
-                    GameInterface.textLabel.setText("Противник промахнулся. Твой ход");
+                    gameInterface.setTextLabel("Противник промахнулся. Твой ход");
                     break;
                 case INJURE:
-                    GameInterface.textLabel.setText("Твой корабль был ранен. Противник продолжает стрельбу...");
+                    gameInterface.setTextLabel("Твой корабль был ранен. Противник продолжает стрельбу...");
                     break;
                 case KILL:
-                    GameInterface.textLabel.setText("Твой корабль был потоплен. Противник продолжает стрельбу...");
+                    gameInterface.setTextLabel("Твой корабль был потоплен. Противник продолжает стрельбу...");
                     break;
             }
         }
@@ -52,11 +50,9 @@ public class Messages {
 
     public void getWinMessage(boolean humanWin) {
         if (humanWin) {
-            GameInterface.textLabel.setText("Игра окончена. Ты победил! Поздравляю!");
-            Human.humanNumberOfWins += 1;
+            gameInterface.setTextLabel("Игра окончена. Ты победил! Поздравляю!");
         } else {
-            GameInterface.textLabel.setText("Игра окончена. Компьютер победил. Возьми реванш...");
-            Computer.computerNumberOfWins += 1;
+            gameInterface.setTextLabel("Игра окончена. Компьютер победил. Возьми реванш...");
         }
     }
 }

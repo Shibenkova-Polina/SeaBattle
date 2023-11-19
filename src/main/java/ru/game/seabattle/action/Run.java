@@ -5,28 +5,32 @@ import ru.game.seabattle.gui.Messages;
 import ru.game.seabattle.process.Game;
 
 public class Run implements Runnable {
-    private static final int SLEEP_TIME = 10;
+    private final int SLEEP_TIME = 10;
 
     @Override
     public void run() {
-        GameInterface.getInstance().draw();
-        Messages.getInstance().getStartMessage();
+        Game game = Game.getInstance();
+        GameInterface gameInterface = GameInterface.getInstance();
+        Messages messages = Messages.getInstance();
+
+        gameInterface.draw();
+        messages.getStartMessage();
 
         while(true) {
-            if (Game.newGame) {
-                Game.newGame = false;
-                Game.computer.newGame();
-                Game.human.newGame();
-                GameInterface.getInstance().draw();
-                Messages.getInstance().getStartMessage();
+            if (game.getNewGame()) {
+                game.setNewGame(false);
+                game.getComputer().newGame();
+                game.getHuman().newGame();
+                gameInterface.draw();
+                messages.getStartMessage();
             }
 
-            if (Game.computer.moves()) {
-                Game.computer.shoot();
+            if (game.getComputer().moves()) {
+                game.getComputer().shoot();
             }
 
-            if (Game.computer.getShipsToKill() == 0 || Game.human.getShipsToKill() == 0) {
-                Messages.getInstance().getWinMessage(Game.human.getShipsToKill() == 0);
+            if (game.getComputer().getShipsToKill() == 0 || game.getHuman().getShipsToKill() == 0) {
+                messages.getWinMessage(game.getHuman().getShipsToKill() == 0);
                 break;
             }
 

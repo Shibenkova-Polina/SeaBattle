@@ -5,8 +5,7 @@ import ru.game.seabattle.process.Game;
 
 public class Main {
     public static void main(String[] args) {
-        ArrangementOfShips.idPlacements = 0;
-
-        Game.playGame();
+        ArrangementOfShips.getInstance().setIdPlacements(0);
+        Game.getInstance().playGame();
     }
 }

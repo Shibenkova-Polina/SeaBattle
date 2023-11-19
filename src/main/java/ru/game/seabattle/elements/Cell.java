@@ -6,7 +6,6 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 public class Cell extends JButton {
-
     private final int xCoord;
     private final int yCoord;
     private Ship ship;
@@ -63,7 +62,7 @@ public class Cell extends JButton {
         }
     }
 
-    public boolean conditionOfShip() {
+    private boolean conditionOfShip() {
         ArrayList<Cell> cells = ship.getCells();
 
         for (Cell cell : cells){

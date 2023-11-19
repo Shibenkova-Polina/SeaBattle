@@ -1,9 +1,9 @@
 package ru.game.seabattle.process;
 
-import ru.game.seabattle.database.DataBase;
 import ru.game.seabattle.elements.Cell;
 import ru.game.seabattle.elements.Field;
 import ru.game.seabattle.elements.Ship;
+import ru.game.seabattle.persistence.DBPersistence;
 import ru.game.seabattle.players.Computer;
 
 import java.util.ArrayList;
@@ -12,16 +12,27 @@ public class ArrangementOfShips {
     private static final int NUMBER_OF_ORIENTATIONS = 2;
     private static final int NUMBER_OF_SHIP_TYPES = 4;
 
-    public static Cell[][] placementField;
-
-    public static int idPlacements = 0;
+    public Cell[][] placementField;
+    private static ArrangementOfShips instance;
+    private int idPlacements = 0;
 
     public enum Orientation {
         HORIZONTAL,
         VERTICAL
     }
 
-    public static void createShips(Field field) {
+    public synchronized static ArrangementOfShips getInstance() {
+        if (instance == null) {
+            instance = new ArrangementOfShips();
+        }
+        return instance;
+    }
+
+    public void setIdPlacements(int num) {
+        idPlacements = num;
+    }
+
+    public void createShips(Field field) {
         for (int shipSize = NUMBER_OF_SHIP_TYPES; shipSize >= 1 ; --shipSize) {
             int shipsCount = NUMBER_OF_SHIP_TYPES - shipSize + 1;
 
@@ -48,6 +59,8 @@ public class ArrangementOfShips {
                     }
                 } while (!validPlace(x, y, shipSize, orientation));
 
+                createShip(x, y, shipSize, orientation);
+
                 String orient;
                 if (orientation == Orientation.VERTICAL) {
                     orient = "VERTICAL";
@@ -56,15 +69,16 @@ public class ArrangementOfShips {
                 }
 
                 String str;
-                if (!Computer.createFirst ) {
+                if (!Computer.getInstance().getCreationBD()) {
                     str = "Computer";
                 } else {
                     str = "Human";
                 }
 
                 idPlacements += 1;
+                DBPersistence dbPersistence = new DBPersistence();
 
-                DataBase.fillBD_2(idPlacements, str, shipSize, x, y, orient);
+                dbPersistence.createShips(idPlacements, str, shipSize, x, y, orient);
 
             }
         }
@@ -73,24 +87,7 @@ public class ArrangementOfShips {
         placementField = null;
     }
 
-    public static void createPrevShips(Field field, String[] data) {
-        ArrayList<Ship> ships = new ArrayList<>();
-
-        for (int i = 0; i < Field.FIELD_SIZE; i++) {
-            String str = data[i];
-            String[] coord = str.split(" ");
-            int x = Integer.parseInt(coord[0]);
-            int y = Integer.parseInt(coord[1]);
-            int size = Integer.parseInt(coord[2]);
-            ArrangementOfShips.Orientation orient = ArrangementOfShips.Orientation.valueOf(coord[3]);
-            ships.add(createShip(x, y, size, orient));
-        }
-
-        field.setCells(placementField);
-        placementField = null;
-        }
-
-    private static boolean validPlace(int x, int y, int size, Orientation orientation) {
+    private boolean validPlace(int x, int y, int size, Orientation orientation) {
         int xFrom = x - 1;
         int yFrom = y - 1;
         int xTo;
@@ -139,7 +136,7 @@ public class ArrangementOfShips {
         return true;
     }
 
-    public static Ship createShip(int x, int y, int size, Orientation orientation) {
+    private void createShip(int x, int y, int size, Orientation orientation) {
         int xTo;
         int yTo;
 
@@ -177,11 +174,24 @@ public class ArrangementOfShips {
 
         ship.setCells(cells);
         ship.setBorders(borders);
-
-        return ship;
     }
 
-    public static void setPlacementField(Cell[][] placementField) {
-        ArrangementOfShips.placementField = placementField;
+    public void createPrevShips(Field field, String[] data) {
+        for (int i = 0; i < Field.FIELD_SIZE; i++) {
+            String str = data[i];
+            String[] coord = str.split(" ");
+            int x = Integer.parseInt(coord[0]);
+            int y = Integer.parseInt(coord[1]);
+            int size = Integer.parseInt(coord[2]);
+            ArrangementOfShips.Orientation orient = ArrangementOfShips.Orientation.valueOf(coord[3]);
+            createShip(x, y, size, orient);
+        }
+
+        field.setCells(placementField);
+        placementField = null;
+    }
+
+   public void setPlacementField(Cell[][] placementField) {
+        this.placementField = placementField;
     }
 }
