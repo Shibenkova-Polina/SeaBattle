@@ -12,7 +12,7 @@ public class MyDataBase {
     private static MyDataBase instanse;
     private final DatabaseProperties properties = PropertiesFactory.getProperties();
 
-    protected MyDataBase() {
+    private MyDataBase() {
         init();
     }
 

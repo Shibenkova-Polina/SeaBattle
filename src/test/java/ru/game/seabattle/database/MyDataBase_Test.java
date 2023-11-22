@@ -10,7 +10,7 @@ import java.util.Map;
 import static org.assertj.core.api.BDDAssertions.then;
 
 public class MyDataBase_Test {
-    private final MyDataBase myDataBase = new MyDataBase();
+    private final MyDataBase myDataBase = MyDataBase.getInstance();
     private final DBPersistence dbPersistence = new DBPersistence();
 
     @Test
