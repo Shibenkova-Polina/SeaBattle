@@ -30,7 +30,7 @@ public class Computer extends Player {
 
     private static Computer instance;
 
-    public Computer() {
+    private Computer() {
         super();
         myTurn = false;
         setEnemyField();

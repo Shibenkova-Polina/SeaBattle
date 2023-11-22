@@ -11,7 +11,7 @@ public class Human extends Player implements ActionListener {
     private int shipsToKill = NUMBER_OF_PLAYER_SHIPS;
     private static Human instance;
 
-    public Human() {
+    private Human() {
         super();
         myTurn = true;
         Computer.getInstance().setCreationBD(false);

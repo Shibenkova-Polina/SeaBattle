@@ -60,7 +60,6 @@ public class ActionListenerPreviousGameSwitch implements ActionListener {
             return;
         }
 
-        MyDataBase myDataBase = MyDataBase.getInstance();
         String[] data_2 = myDataBase.getComputerShips();
 
         arrangementOfShips.setPlacementField(field.getCells());

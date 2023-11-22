@@ -78,7 +78,6 @@ public class MyDataBase {
                    Data text not null
                )
                """;
-
         execute(sql);
     }
 
