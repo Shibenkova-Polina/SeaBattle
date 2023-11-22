@@ -83,7 +83,9 @@ public class Computer extends Player {
         while (myTurn) {
             try {
                 Thread.sleep(SLEEP_TIME_SHOT);
-            } catch (InterruptedException e) {}
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
             if (shipsToKill == 0) {
                 return;
