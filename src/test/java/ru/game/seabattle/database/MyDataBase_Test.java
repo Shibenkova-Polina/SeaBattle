@@ -91,12 +91,12 @@ public class MyDataBase_Test {
         myDataBase.clearCells();
         addElementForTestCellsHuman();
 
-        Map<String, String> firstData = myDataBase.getHumanCells();
-        then(firstData.size()).isEqualTo(1);
+        Map<String, String> data = myDataBase.getHumanCells();
+        then(data.size()).isEqualTo(1);
 
         myDataBase.clearCells();
-        Map<String, String> secondData = myDataBase.getHumanCells();
-        then(secondData.size()).isEqualTo(0);
+        data = myDataBase.getHumanCells();
+        then(data.size()).isEqualTo(0);
     }
 
     @Test
@@ -105,12 +105,12 @@ public class MyDataBase_Test {
         myDataBase.clearShips();
         addElementForTestShipsComputer();
 
-        String[] firstData = myDataBase.getComputerShips();
-        then(firstData[0]).isEqualTo("1 6 4 VERTICAL");
+        String[] data = myDataBase.getComputerShips();
+        then(data[0]).isEqualTo("1 6 4 VERTICAL");
 
         myDataBase.clearShips();
-        String[] secondData = myDataBase.getComputerShips();
-        then(secondData[0]).isNull();
+        data = myDataBase.getComputerShips();
+        then(data[0]).isNull();
     }
 
     private void addElementForTestCellsHuman() {
