@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 public class ActionListenerNewGame implements ActionListener {
     private Thread lastGame;
 
-    public ActionListenerNewGame(boolean newGame, Thread lastGame) {
+    public ActionListenerNewGame(Thread lastGame) {
         this.lastGame = lastGame;
     }
 
@@ -20,7 +20,6 @@ public class ActionListenerNewGame implements ActionListener {
         ArrangementOfShips.getInstance().setIdPlacements(0);
         MyDataBase myDataBase = MyDataBase.getInstance();
 
-        myDataBase.clearCells();
         myDataBase.clearShips();
 
         Game.getInstance().setNewGame(true);

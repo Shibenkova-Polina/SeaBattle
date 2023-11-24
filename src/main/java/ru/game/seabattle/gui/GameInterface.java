@@ -70,7 +70,7 @@ public class GameInterface extends JFrame {
         ActionListenerExit actionListenerExit = new ActionListenerExit();
         exit.addActionListener(actionListenerExit);
         resume.addActionListener(new ActionListenerPreviousGameSwitch(cardLayout, cardPanel, "play"));
-        start.addActionListener(new ActionListenerNewGameSwitch(cardLayout, cardPanel, "play", game.getNewGame(), game.getLastGame()));
+        start.addActionListener(new ActionListenerNewGameSwitch(cardLayout, cardPanel, "play", game.getLastGame()));
 
         JButton backToMenu = new JButton("Вернуться в меню");
         backToMenu.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
@@ -82,7 +82,7 @@ public class GameInterface extends JFrame {
 
         JButton newGameButton = new JButton("Новая игра");
         newGameButton.setPreferredSize(new Dimension(BUTTON_WIDTH, BUTTON_HEIGHT));
-        ActionListenerNewGame actionListenerNewGame = new ActionListenerNewGame(game.getNewGame(), game.getLastGame());
+        ActionListenerNewGame actionListenerNewGame = new ActionListenerNewGame(game.getLastGame());
         newGameButton.addActionListener(actionListenerNewGame);
 
         gamePanel.setLayout(new GridLayout(WINDOW_GRID_SIZE, WINDOW_GRID_SIZE));

@@ -11,6 +11,8 @@ import java.util.ArrayList;
 public class ArrangementOfShips {
     private static final int NUMBER_OF_ORIENTATIONS = 2;
     private static final int NUMBER_OF_SHIP_TYPES = 4;
+    private static final int INDEX_OF_ORIENTATIONS = 3;
+    private static final int INDEX_OF_SHIP_SIZE = 2;
 
     public Cell[][] placementField;
     private static ArrangementOfShips instance;
@@ -182,8 +184,8 @@ public class ArrangementOfShips {
             String[] coord = str.split(" ");
             int x = Integer.parseInt(coord[0]);
             int y = Integer.parseInt(coord[1]);
-            int size = Integer.parseInt(coord[2]);
-            ArrangementOfShips.Orientation orient = ArrangementOfShips.Orientation.valueOf(coord[3]);
+            int size = Integer.parseInt(coord[INDEX_OF_SHIP_SIZE]);
+            ArrangementOfShips.Orientation orient = ArrangementOfShips.Orientation.valueOf(coord[INDEX_OF_ORIENTATIONS]);
             createShip(x, y, size, orient);
         }
 

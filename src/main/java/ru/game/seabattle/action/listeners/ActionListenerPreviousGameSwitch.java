@@ -38,38 +38,38 @@ public class ActionListenerPreviousGameSwitch implements ActionListener {
         resumeFieldComputer(computerField);
     }
 
-    public void resumeFieldHuman(Field field) {
+    private void resumeFieldHuman(Field field) {
         if (field == null) {
             return;
         }
 
-        String[] data_2 = myDataBase.getHumanShips();
+        String[] dataShips = myDataBase.getHumanShips();
 
         arrangementOfShips.setPlacementField(field.getCells());
-        arrangementOfShips.createPrevShips(field, data_2);
+        arrangementOfShips.createPrevShips(field, dataShips);
 
-        Map<String, String> data = myDataBase.getHumanCells();
-        String str = data.get("0");
-        int num = Integer.parseInt((str.trim().split(" ")[10]));
+        Map<String, String> dataCells = myDataBase.getHumanCells();
+        String str = dataCells.get("0");
+        int num = Integer.parseInt((str.trim().split(" ")[Field.FIELD_SIZE]));
         Human.getInstance().setShipsToKill(num);
-        setCellCtate(field, data);
+        setCellCtate(field, dataCells);
     }
 
-    public void resumeFieldComputer(Field field) {
+    private void resumeFieldComputer(Field field) {
         if (field == null) {
             return;
         }
 
-        String[] data_2 = myDataBase.getComputerShips();
+        String[] dataShips = myDataBase.getComputerShips();
 
         arrangementOfShips.setPlacementField(field.getCells());
-        arrangementOfShips.createPrevShips(field, data_2);
+        arrangementOfShips.createPrevShips(field, dataShips);
 
-        Map<String, String> data = myDataBase.getComputerCells();
-        String str = data.get("0");
-        int num = Integer.parseInt((str.trim().split(" ")[10]));
+        Map<String, String> dataCells = myDataBase.getComputerCells();
+        String str = dataCells.get("0");
+        int num = Integer.parseInt((str.trim().split(" ")[Field.FIELD_SIZE]));
         Computer.getInstance().setShipsToKill(num);
-        setCellCtate(field, data);
+        setCellCtate(field, dataCells);
     }
 
     private void setCellCtate(Field field, Map<String, String> data) {

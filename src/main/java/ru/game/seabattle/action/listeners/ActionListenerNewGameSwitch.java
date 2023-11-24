@@ -16,11 +16,10 @@ public class ActionListenerNewGameSwitch implements ActionListener {
 
     private Thread lastGame;
 
-    public ActionListenerNewGameSwitch(CardLayout cardLayout, Container container, String panelNameToSwitchTo, boolean newGame, Thread lastGame) {
+    public ActionListenerNewGameSwitch(CardLayout cardLayout, Container container, String panelNameToSwitchTo, Thread lastGame) {
         this.cardLayout = cardLayout;
         this.panelNameToSwitchTo = panelNameToSwitchTo;
         this.container = container;
-
         this.lastGame = lastGame;
     }
 
@@ -29,7 +28,6 @@ public class ActionListenerNewGameSwitch implements ActionListener {
         ArrangementOfShips.getInstance().setIdPlacements(0);
         MyDataBase myDataBase = MyDataBase.getInstance();
 
-        myDataBase.clearCells();
         myDataBase.clearShips();
         cardLayout.show(container, panelNameToSwitchTo);
 
