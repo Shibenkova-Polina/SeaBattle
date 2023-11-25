@@ -12,7 +12,6 @@ public class Human extends Player implements ActionListener {
     private static Human instance;
 
     private Human() {
-        super();
         myTurn = true;
         Computer.getInstance().setCreationBD(false);
     }

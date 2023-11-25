@@ -1,6 +1,7 @@
 package ru.game.seabattle.players;
 
 import ru.game.seabattle.elements.Cell;
+import ru.game.seabattle.elements.CellState;
 import ru.game.seabattle.elements.Field;
 
 public abstract class Player {
@@ -9,6 +10,7 @@ public abstract class Player {
     public Player opponent;
     public boolean myTurn;
     public ShootResult shootResult;
+
     private final Field field;
 
     public Player() {
@@ -41,7 +43,7 @@ public abstract class Player {
     public ShootResult getShot(int x, int y) {
         Cell cell = field.getCells()[x][y];
 
-        if (cell.getState() == Cell.CellState.SEA || cell.getState() == Cell.CellState.SHIP) {
+        if (cell.getState() == CellState.SEA || cell.getState() == CellState.SHIP) {
             cell.getShot();
 
             switch (cell.getState()) {

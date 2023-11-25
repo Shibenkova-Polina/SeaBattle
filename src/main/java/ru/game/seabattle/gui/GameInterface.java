@@ -6,6 +6,7 @@ import ru.game.seabattle.action.listeners.ActionListenerNewGameSwitch;
 import ru.game.seabattle.action.listeners.ActionListenerSwitch;
 import ru.game.seabattle.action.listeners.ActionListenerPreviousGameSwitch;
 import ru.game.seabattle.elements.Cell;
+import ru.game.seabattle.elements.CellState;
 import ru.game.seabattle.elements.Field;
 import ru.game.seabattle.process.Game;
 
@@ -22,14 +23,13 @@ public class GameInterface extends JFrame {
 
     private CardLayout cardLayout = new CardLayout();
     private JPanel cardPanel = new JPanel(cardLayout);
-
     private JPanel panelStart = new JPanel();
     private JPanel humanField = new JPanel();
     private JPanel computerField = new JPanel();
     private JPanel gamePanel = new JPanel();
     private JPanel buttonPanel = new JPanel();
-
     private JPanel buttonAlignment = new JPanel(new GridBagLayout());
+
     private GridBagConstraints constraints = new GridBagConstraints();
 
     private JLabel textLabel = new JLabel();
@@ -43,6 +43,18 @@ public class GameInterface extends JFrame {
 
     private static GameInterface instance;
     Game game = Game.getInstance();
+
+    public static GameInterface getInstance() {
+        if (instance == null) {
+            instance = new GameInterface();
+        }
+
+        return instance;
+    }
+
+    public void setTextLabel(String text) {
+        textLabel.setText(text);
+    }
 
     private GameInterface() {
         super("Морской бой");
@@ -132,19 +144,6 @@ public class GameInterface extends JFrame {
         }
     }
 
-    public static GameInterface getInstance() {
-        if (instance == null) {
-            instance = new GameInterface();
-        }
-
-        return instance;
-    }
-
-
-    public void setTextLabel(String text) {
-        textLabel.setText(text);
-    }
-
     public void draw() {
         Field humanField = game.getHuman().getField();
         Field computerField = game.getComputer().getField();
@@ -174,7 +173,7 @@ public class GameInterface extends JFrame {
     }
 
     private void updateComputerCell(Cell cell) {
-        Cell.CellState state = cell.getState();
+        CellState state = cell.getState();
 
         if (state != null) {
             switch (state) {
@@ -195,7 +194,7 @@ public class GameInterface extends JFrame {
     }
 
     private void updateHumanCell(Cell cell) {
-        Cell.CellState state = cell.getState();
+        CellState state = cell.getState();
 
         if (state != null) {
             switch (state) {

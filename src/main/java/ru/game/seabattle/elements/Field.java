@@ -10,7 +10,7 @@ public class Field {
     public Field() {
         for (int i = 0; i < FIELD_SIZE; i++) {
             for (int j = 0; j < FIELD_SIZE; j++) {
-                cells[j][i] = new Cell(j, i, Cell.CellState.SEA, null);
+                cells[j][i] = new Cell(j, i, CellState.SEA, null);
             }
         }
     }
@@ -23,10 +23,10 @@ public class Field {
         this.cells = cells;
     }
 
-    public void resetCells(){
+    public void resetCells() {
         for (int i = 0; i < FIELD_SIZE; i++) {
             for (int j = 0; j < FIELD_SIZE; j++) {
-                cells[j][i].setState(Cell.CellState.SEA);
+                cells[j][i].setState(CellState.SEA);
             }
         }
 

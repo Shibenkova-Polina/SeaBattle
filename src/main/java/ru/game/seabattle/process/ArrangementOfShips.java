@@ -1,6 +1,7 @@
 package ru.game.seabattle.process;
 
 import ru.game.seabattle.elements.Cell;
+import ru.game.seabattle.elements.CellState;
 import ru.game.seabattle.elements.Field;
 import ru.game.seabattle.elements.Ship;
 import ru.game.seabattle.persistence.DBPersistence;
@@ -15,10 +16,11 @@ public class ArrangementOfShips {
     private static final int INDEX_OF_SHIP_SIZE = 2;
 
     public Cell[][] placementField;
+
     private static ArrangementOfShips instance;
     private int idPlacements = 0;
 
-    public enum Orientation {
+    private enum Orientation {
         HORIZONTAL,
         VERTICAL
     }
@@ -32,6 +34,10 @@ public class ArrangementOfShips {
 
     public void setIdPlacements(int num) {
         idPlacements = num;
+    }
+
+    public void setPlacementField(Cell[][] placementField) {
+        this.placementField = placementField;
     }
 
     public void createShips(Field field) {
@@ -156,7 +162,7 @@ public class ArrangementOfShips {
 
         for (int i = x; i <= xTo; i++) {
             for (int j = y; j <= yTo; j++) {
-                placementField[j][i].inititalizeState(Cell.CellState.SHIP);
+                placementField[j][i].inititalizeState(CellState.SHIP);
                 placementField[j][i].setShip(ship);
                 cells.add(placementField[j][i]);
             }
@@ -165,7 +171,7 @@ public class ArrangementOfShips {
         for (int k = x - 1; k <= xTo + 1; k++) {
             for (int l = y - 1; l <= yTo + 1; l++) {
                 if (k >= 0 && k < Field.FIELD_SIZE && l >= 0 && l < Field.FIELD_SIZE) {
-                    if (placementField[l][k].getState() != Cell.CellState.SHIP) {
+                    if (placementField[l][k].getState() != CellState.SHIP) {
                         if (!borders.contains(placementField[l][k])) {
                             borders.add(placementField[l][k]);
                         }
@@ -191,9 +197,5 @@ public class ArrangementOfShips {
 
         field.setCells(placementField);
         placementField = null;
-    }
-
-   public void setPlacementField(Cell[][] placementField) {
-        this.placementField = placementField;
     }
 }

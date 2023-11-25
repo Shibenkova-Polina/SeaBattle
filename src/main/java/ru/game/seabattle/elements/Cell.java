@@ -19,14 +19,6 @@ public class Cell extends JButton {
         this.ship = ship;
     }
 
-    public enum CellState {
-        SEA,
-        MISS,
-        SHIP,
-        INJURE,
-        KILL
-    }
-
     public CellState getState() {
         return state;
     }
@@ -62,6 +54,11 @@ public class Cell extends JButton {
         }
     }
 
+    public void setState(CellState state) {
+        this.state = state;
+        GameInterface.getInstance().draw();
+    }
+
     private boolean conditionOfShip() {
         ArrayList<Cell> cells = ship.getCells();
 
@@ -91,10 +88,5 @@ public class Cell extends JButton {
 
     public boolean isShip() {
         return state == CellState.SHIP;
-    }
-
-    public void setState(CellState state) {
-        this.state = state;
-        GameInterface.getInstance().draw();
     }
 }

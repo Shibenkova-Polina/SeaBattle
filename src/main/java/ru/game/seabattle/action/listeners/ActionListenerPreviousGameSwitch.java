@@ -1,6 +1,7 @@
 package ru.game.seabattle.action.listeners;
 
 import ru.game.seabattle.elements.Cell;
+import ru.game.seabattle.elements.CellState;
 import ru.game.seabattle.elements.Field;
 import ru.game.seabattle.process.ArrangementOfShips;
 import ru.game.seabattle.process.Game;
@@ -81,7 +82,7 @@ public class ActionListenerPreviousGameSwitch implements ActionListener {
                 String[] states = statesStr.trim().split(" ");
                 for (int j = 0; j < Field.FIELD_SIZE; j++) {
                     Cell cell = cells[j][i];
-                    Cell.CellState cellState = Cell.CellState.valueOf(states[j]);
+                    CellState cellState = CellState.valueOf(states[j]);
                     cell.setState(cellState);
                 }
             }

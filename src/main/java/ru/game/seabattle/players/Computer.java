@@ -1,6 +1,7 @@
 package ru.game.seabattle.players;
 
 import ru.game.seabattle.elements.Cell;
+import ru.game.seabattle.elements.CellState;
 import ru.game.seabattle.elements.Field;
 import ru.game.seabattle.gui.Messages;
 
@@ -31,7 +32,6 @@ public class Computer extends Player {
     private static Computer instance;
 
     private Computer() {
-        super();
         myTurn = false;
         setEnemyField();
         creationBD = true;
@@ -51,7 +51,7 @@ public class Computer extends Player {
 
         for (int i = 0; i < Field.FIELD_SIZE; i++) {
             for (int j = 0; j < Field.FIELD_SIZE; j++) {
-                enemyCells[j][i] = new Cell(j, i, Cell.CellState.SEA, null);
+                enemyCells[j][i] = new Cell(j, i, CellState.SEA, null);
             }
         }
     }
@@ -158,11 +158,11 @@ public class Computer extends Player {
 
         for (int i = x + 1; i < x + NUMBER_OF_SHIP_TYPES; ++i) {
             if (i < Field.FIELD_SIZE) {
-                if (enemyCells[i][y].getState() == Cell.CellState.MISS) {
+                if (enemyCells[i][y].getState() == CellState.MISS) {
                     break;
                 }
 
-                if (enemyCells[i][y].getState() == Cell.CellState.SEA) {
+                if (enemyCells[i][y].getState() == CellState.SEA) {
                     rightAims.add(i);
                 }
             } else {
@@ -172,11 +172,11 @@ public class Computer extends Player {
 
         for (int i = x - 1; i > x - NUMBER_OF_SHIP_TYPES; --i) {
             if (i >= 0) {
-                if (enemyCells[i][y].getState() == Cell.CellState.MISS) {
+                if (enemyCells[i][y].getState() == CellState.MISS) {
                     break;
                 }
 
-                if (enemyCells[i][y].getState() == Cell.CellState.SEA) {
+                if (enemyCells[i][y].getState() == CellState.SEA) {
                     leftAims.add(i);
                 }
             } else {
@@ -186,11 +186,11 @@ public class Computer extends Player {
 
         for (int i = y - 1; i > y - NUMBER_OF_SHIP_TYPES; --i) {
             if (i >= 0) {
-                if (enemyCells[x][i].getState() == Cell.CellState.MISS) {
+                if (enemyCells[x][i].getState() == CellState.MISS) {
                     break;
                 }
 
-                if (enemyCells[x][i].getState() == Cell.CellState.SEA) {
+                if (enemyCells[x][i].getState() == CellState.SEA) {
                     upAims.add(i);
                 }
             } else {
@@ -200,11 +200,11 @@ public class Computer extends Player {
 
         for (int i = y + 1; i < y + NUMBER_OF_SHIP_TYPES; ++i) {
             if (i < Field.FIELD_SIZE) {
-                if (enemyCells[x][i].getState() == Cell.CellState.MISS) {
+                if (enemyCells[x][i].getState() == CellState.MISS) {
                     break;
                 }
 
-                if (enemyCells[x][i].getState() == Cell.CellState.SEA) {
+                if (enemyCells[x][i].getState() == CellState.SEA) {
                     downAims.add(i);
                 }
             } else {
@@ -228,7 +228,7 @@ public class Computer extends Player {
         do {
             x = (int) (Math.random() * Field.FIELD_SIZE);
             y = (int) (Math.random() * Field.FIELD_SIZE);
-        } while (enemyCells[x][y].getState() != Cell.CellState.SEA);
+        } while (enemyCells[x][y].getState() != CellState.SEA);
 
         coordinate[0] = x;
         coordinate[1] = y;
@@ -248,12 +248,12 @@ public class Computer extends Player {
                     currentAims.clear();
                 }
 
-                enemyCells[x][y].setState(Cell.CellState.MISS);
+                enemyCells[x][y].setState(CellState.MISS);
                 switchPlayers();
                 break;
             case INJURE:
                 shootToPotentialAims = true;
-                enemyCells[x][y].setState(Cell.CellState.INJURE);
+                enemyCells[x][y].setState(CellState.INJURE);
                 sleep = true;
                 break;
             case KILL:
@@ -277,20 +277,20 @@ public class Computer extends Player {
     }
 
     private void markKilled(int x, int y) {
-        enemyCells[x][y].setState(Cell.CellState.INJURE);
+        enemyCells[x][y].setState(CellState.INJURE);
 
         for (int i = 0; i < Field.FIELD_SIZE; i++) {
             for (int j = 0; j < Field.FIELD_SIZE; j++) {
                 Cell cell = enemyCells[j][i];
 
-                if (cell.getState() == Cell.CellState.INJURE) {
-                    cell.setState(Cell.CellState.KILL);
+                if (cell.getState() == CellState.INJURE) {
+                    cell.setState(CellState.KILL);
 
                     for (int k = i - 1; k <= i + 1; k++) {
                         for (int l = j - 1; l <= j + 1; l++) {
                             if (k >= 0 && l >= 0 && l < Field.FIELD_SIZE && k < Field.FIELD_SIZE) {
-                                if (enemyCells[l][k].getState() == Cell.CellState.SEA) {
-                                    enemyCells[l][k].setState(Cell.CellState.MISS);
+                                if (enemyCells[l][k].getState() == CellState.SEA) {
+                                    enemyCells[l][k].setState(CellState.MISS);
                                 }
                             }
                         }

@@ -11,11 +11,11 @@ public class Ship {
 
     public void sink() {
         for (Cell cell : cells) {
-            cell.setState(Cell.CellState.KILL);
+            cell.setState(CellState.KILL);
         }
 
         for (Cell cell : borders) {
-            cell.setState(Cell.CellState.MISS);
+            cell.setState(CellState.MISS);
         }
     }
 
