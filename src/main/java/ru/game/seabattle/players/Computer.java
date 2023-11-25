@@ -79,6 +79,34 @@ public class Computer extends Player {
         shipsToKill = num;
     }
 
+    public Cell[][] getEnemyCells() {
+        return enemyCells;
+    }
+
+    public void setLastX(int i) {
+        lastX = i;
+    }
+
+    public void setLastY(int i) {
+        lastY = i;
+    }
+
+    public ArrayList<Integer> getLeftAims() {
+        return leftAims;
+    }
+
+    public ArrayList<Integer> getRightAims() {
+        return rightAims;
+    }
+
+    public ArrayList<Integer> getUpAims() {
+        return upAims;
+    }
+
+    public ArrayList<Integer> getDownAims() {
+        return downAims;
+    }
+
     public void shoot() {
         while (myTurn) {
             try {
@@ -116,7 +144,7 @@ public class Computer extends Player {
 
         return coordinates;
     }
-    private int[] getNextCoordinates() {
+    public int[] getNextCoordinates() {
         if (!aimsCalculated) {
             calculateAims();
         }
@@ -148,7 +176,7 @@ public class Computer extends Player {
         return coordinate;
     }
 
-    private void calculateAims() {
+    public void calculateAims() {
         clearAims();
 
         int x = lastX;
@@ -276,7 +304,7 @@ public class Computer extends Player {
         }
     }
 
-    private void markKilled(int x, int y) {
+    public void markKilled(int x, int y) {
         enemyCells[x][y].setState(CellState.INJURE);
 
         for (int i = 0; i < Field.FIELD_SIZE; i++) {

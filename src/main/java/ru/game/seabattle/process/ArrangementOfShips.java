@@ -15,12 +15,12 @@ public class ArrangementOfShips {
     private static final int INDEX_OF_ORIENTATIONS = 3;
     private static final int INDEX_OF_SHIP_SIZE = 2;
 
-    public Cell[][] placementField;
+    private Cell[][] placementField;
 
     private static ArrangementOfShips instance;
     private int idPlacements = 0;
 
-    private enum Orientation {
+    public enum Orientation {
         HORIZONTAL,
         VERTICAL
     }
@@ -34,6 +34,10 @@ public class ArrangementOfShips {
 
     public void setIdPlacements(int num) {
         idPlacements = num;
+    }
+
+    public int getIdPlacements() {
+        return idPlacements;
     }
 
     public void setPlacementField(Cell[][] placementField) {
@@ -144,7 +148,7 @@ public class ArrangementOfShips {
         return true;
     }
 
-    private void createShip(int x, int y, int size, Orientation orientation) {
+    public void createShip(int x, int y, int size, Orientation orientation) {
         int xTo;
         int yTo;
 
