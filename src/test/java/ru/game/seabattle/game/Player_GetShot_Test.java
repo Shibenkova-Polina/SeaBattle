@@ -5,37 +5,75 @@ import org.junit.jupiter.api.Test;
 import ru.game.seabattle.elements.Cell;
 import ru.game.seabattle.elements.CellState;
 import ru.game.seabattle.elements.Field;
+import ru.game.seabattle.elements.ShootResult;
 import ru.game.seabattle.players.Human;
-import ru.game.seabattle.players.Player;
 import ru.game.seabattle.process.ArrangementOfShips;
 
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class Player_GetShot_Test {
+    private final ArrangementOfShips arrangementOfShips = ArrangementOfShips.getInstance();
+    Human human = Human.getInstance();
+    Field field = human.getField();
+    Cell[][] cells = field.getCells();
 
     @Test
-    @DisplayName("when human cells are entered into DB")
-    public void whenHumanCellsAreEnteredIntoDB() {
-        ArrangementOfShips arrangementOfShips = ArrangementOfShips.getInstance();
-        Human human = Human.getInstance();
+    @DisplayName("when player shoots at cell with state SEA")
+    public void whenPlayerShootsAtCellWithStateSea() {
         arrangementOfShips.setPlacementField(human.getField().getCells());
 
-        Field field = human.getField();
-        Cell[][] cells = field.getCells();
-
         cells[1][1].setState(CellState.SEA);
+        arrangementOfShips.createShip(3, 3, 1, ArrangementOfShips.Orientation.VERTICAL);
+
+        ShootResult shootResult = human.getShot(1, 1);
+        then("MISS").isEqualTo(shootResult.toString());
+    }
+    @Test
+    @DisplayName("when player shoots at cell with state INJURE")
+    public void whenPlayerShootsAtCellWithStateInjure() {
+        arrangementOfShips.setPlacementField(human.getField().getCells());
+
         cells[2][2].setState(CellState.INJURE);
+        arrangementOfShips.createShip(3, 3, 1, ArrangementOfShips.Orientation.VERTICAL);
+
+        ShootResult shootResult = human.getShot(2, 2);
+        assertNull(shootResult);
+    }
+
+    @Test
+    @DisplayName("when player shoots at cell with state SHIP")
+    public void whenPlayerShootsAtCellWithStateShip() {
+        arrangementOfShips.setPlacementField(human.getField().getCells());
+
         cells[3][3].setState(CellState.SHIP);
         arrangementOfShips.createShip(3, 3, 1, ArrangementOfShips.Orientation.VERTICAL);
 
-        Player.ShootResult shootResult = human.getShot(1, 1);
-        then("MISS").isEqualTo(shootResult.toString());
-
-        shootResult = human.getShot(2, 2);
-        assertNull(shootResult);
-
-        shootResult = human.getShot(3, 3);
+        ShootResult shootResult = human.getShot(3, 3);
         then("KILL").isEqualTo(shootResult.toString());
+    }
+
+    @Test
+    @DisplayName("when player shoots at cell with state MISS")
+    public void whenPlayerShootsAtCellWithStateMiss() {
+        arrangementOfShips.setPlacementField(human.getField().getCells());
+
+        cells[4][4].setState(CellState.MISS);
+        arrangementOfShips.createShip(3, 3, 1, ArrangementOfShips.Orientation.VERTICAL);
+
+        ShootResult shootResult = human.getShot(4, 4);
+        assertNull(shootResult);
+    }
+
+    @Test
+    @DisplayName("when player shoots at cell with state KILL")
+    public void whenPlayerShootsAtCellWithStateKill() {
+        arrangementOfShips.setPlacementField(human.getField().getCells());
+
+        cells[5][5].setState(CellState.KILL);
+        arrangementOfShips.createShip(3, 3, 1, ArrangementOfShips.Orientation.VERTICAL);
+
+        ShootResult shootResult = human.getShot(5, 5);
+        assertNull(shootResult);
     }
 }

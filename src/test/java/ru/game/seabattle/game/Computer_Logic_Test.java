@@ -8,11 +8,11 @@ import ru.game.seabattle.players.Computer;
 import static org.assertj.core.api.BDDAssertions.then;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
-public class Computer_MarkKilled_Test {
+public class Computer_Logic_Test {
+    private final Computer computer = Computer.getInstance();
     @Test
-    @DisplayName("when human cells are entered into DB")
-    public void whenHumanCellsAreEnteredIntoDB() {
-        Computer computer = Computer.getInstance();
+    @DisplayName("when computer marks cells as killed after shot")
+    public void whenComputerMarksCellsAsKilledAfterShot() {
         computer.markKilled(1, 1);
         Cell[][] cells = computer.getEnemyCells();
 
@@ -23,6 +23,12 @@ public class Computer_MarkKilled_Test {
         then("MISS").isEqualTo(cells[2][1].getState().toString());
         then("SEA").isEqualTo(cells[1][3].getState().toString());
         then("SEA").isEqualTo(cells[3][1].getState().toString());
+    }
+
+    @Test
+    @DisplayName("when computer calculate aims for next shots")
+    public void whenComputerCalculateAimsForNextShots() {
+        computer.markKilled(1, 1);
 
         computer.setLastX(3);
         computer.setLastY(1);
@@ -42,6 +48,15 @@ public class Computer_MarkKilled_Test {
         assertArrayEquals(expectedLeft, actualLeft);
         assertArrayEquals(expectedUp, actualUp);
         assertArrayEquals(expectedDown, actualDown);
+    }
+
+    @Test
+    @DisplayName("when computer gets coordinate to shoot at one of the aim")
+    public void whenComputerGetNextCoordinateToShoot() {
+        computer.markKilled(1, 1);
+        computer.setLastX(3);
+        computer.setLastY(1);
+        computer.calculateAims();
 
         int[] actualNextCoordinate = computer.getNextCoordinates();
         int[] expectedNextCoordinate = {4, 1};

@@ -2,6 +2,7 @@ package ru.game.seabattle.players;
 
 import ru.game.seabattle.elements.Cell;
 import ru.game.seabattle.elements.Field;
+import ru.game.seabattle.elements.ShootResult;
 import ru.game.seabattle.gui.Messages;
 
 import java.awt.event.ActionEvent;

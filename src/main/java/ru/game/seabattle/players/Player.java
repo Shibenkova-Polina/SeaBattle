@@ -3,6 +3,7 @@ package ru.game.seabattle.players;
 import ru.game.seabattle.elements.Cell;
 import ru.game.seabattle.elements.CellState;
 import ru.game.seabattle.elements.Field;
+import ru.game.seabattle.elements.ShootResult;
 
 public abstract class Player {
     public static final int NUMBER_OF_PLAYER_SHIPS = 10;
@@ -23,12 +24,6 @@ public abstract class Player {
 
     public Field getField() {
         return field;
-    }
-
-    public enum ShootResult {
-        MISS,
-        INJURE,
-        KILL
     }
 
     public void setOpponent(Player opponent) {

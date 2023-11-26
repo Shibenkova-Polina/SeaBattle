@@ -1,5 +1,6 @@
 package ru.game.seabattle.gui;
 
+import ru.game.seabattle.elements.ShootResult;
 import ru.game.seabattle.players.Player;
 
 public class Messages {
@@ -16,7 +17,7 @@ public class Messages {
         gameInterface.setTextLabel("Твой ход");
     }
 
-    public void getMessage(boolean human, Player.ShootResult shootResult) {
+    public void getMessage(boolean human, ShootResult shootResult) {
         if (shootResult == null) {
             return;
         }

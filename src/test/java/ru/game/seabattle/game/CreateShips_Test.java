@@ -9,12 +9,12 @@ import static org.assertj.core.api.BDDAssertions.then;
 
 public class CreateShips_Test {
     @Test
-    @DisplayName("when human cells are entered into DB")
-    public void whenHumanCellsAreEnteredIntoDB() {
+    @DisplayName("when program creates and places ships")
+    public void whenProgramCreatesAndPlacesShips() {
         ArrangementOfShips arrangementOfShips = ArrangementOfShips.getInstance();
         Human human = Human.getInstance();
-        arrangementOfShips.setPlacementField(human.getField().getCells());
 
+        arrangementOfShips.setPlacementField(human.getField().getCells());
         arrangementOfShips.createShips(human.getField());
         then(10).isEqualTo(arrangementOfShips.getIdPlacements());
     }
