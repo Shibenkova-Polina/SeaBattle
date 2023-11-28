@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class Computer_Logic_Test {
     private final Computer computer = Computer.getInstance();
+
     @Test
     @DisplayName("when computer marks cells as killed after shot")
     public void whenComputerMarksCellsAsKilledAfterShot() {
