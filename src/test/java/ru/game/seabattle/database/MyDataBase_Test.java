@@ -139,7 +139,7 @@ public class MyDataBase_Test {
 
     private void addElementForTestShipsComputer() {
         dbPersistence.createShips(NUMBER_ONE, "Computer", NUMBER_FOUR, NUMBER_ONE, NUMBER_SIX, "VERTICAL");
-        dbPersistence.createShips(NUMBER_TWO, "Computer", NUMBER_THREE, NUMBER_FOUR, NUMBER_ONE, "HORIZONTAL");
+        dbPersistence.createShips(NUMBER_TWO, "Computer", NUMBER_THREE, NUMBER_FOUR, NUMBER_ZERO, "HORIZONTAL");
         dbPersistence.createShips(NUMBER_THREE, "Computer", NUMBER_THREE, NUMBER_SIX, NUMBER_ZERO, "HORIZONTAL");
         dbPersistence.createShips(NUMBER_FOUR, "Computer", NUMBER_TWO, NUMBER_ZERO, NUMBER_TWO, "HORIZONTAL");
         dbPersistence.createShips(NUMBER_FIVE, "Computer", NUMBER_TWO, NUMBER_THREE, NUMBER_EIGHT, "VERTICAL");
