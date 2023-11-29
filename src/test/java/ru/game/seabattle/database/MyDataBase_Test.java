@@ -10,6 +10,18 @@ import java.util.Map;
 import static org.assertj.core.api.BDDAssertions.then;
 
 public class MyDataBase_Test {
+    private static final int NUMBER_ZERO = 0;
+    private static final int NUMBER_ONE = 1;
+    private static final int NUMBER_TWO = 2;
+    private static final int NUMBER_THREE = 3;
+    private static final int NUMBER_FOUR = 4;
+    private static final int NUMBER_FIVE = 5;
+    private static final int NUMBER_SIX = 6;
+    private static final int NUMBER_SEVEN = 7;
+    private static final int NUMBER_EIGHT = 8;
+    private static final int NUMBER_NINE = 9;
+    private static final int NUMBER_TEN = 10;
+
     private final MyDataBase myDataBase = MyDataBase.getInstance();
     private final DBPersistence dbPersistence = new DBPersistence();
 
@@ -50,16 +62,16 @@ public class MyDataBase_Test {
         addElementForTestShipsComputer();
 
         String[] data = myDataBase.getComputerShips();
-        then(data[0]).isEqualTo("1 6 4 VERTICAL");
-        then(data[1]).isEqualTo("4 0 3 HORIZONTAL");
-        then(data[2]).isEqualTo("6 0 3 HORIZONTAL");
-        then(data[3]).isEqualTo("0 2 2 HORIZONTAL");
-        then(data[4]).isEqualTo("3 8 2 VERTICAL");
-        then(data[5]).isEqualTo("7 4 2 VERTICAL");
-        then(data[6]).isEqualTo("2 2 1 VERTICAL");
-        then(data[7]).isEqualTo("9 0 1 VERTICAL");
-        then(data[8]).isEqualTo("9 6 1 VERTICAL");
-        then(data[9]).isEqualTo("9 9 1 HORIZONTAL");
+        then(data[NUMBER_ZERO]).isEqualTo("1 6 4 VERTICAL");
+        then(data[NUMBER_ONE]).isEqualTo("4 0 3 HORIZONTAL");
+        then(data[NUMBER_TWO]).isEqualTo("6 0 3 HORIZONTAL");
+        then(data[NUMBER_THREE]).isEqualTo("0 2 2 HORIZONTAL");
+        then(data[NUMBER_FOUR]).isEqualTo("3 8 2 VERTICAL");
+        then(data[NUMBER_FIVE]).isEqualTo("7 4 2 VERTICAL");
+        then(data[NUMBER_SIX]).isEqualTo("2 2 1 VERTICAL");
+        then(data[NUMBER_SEVEN]).isEqualTo("9 0 1 VERTICAL");
+        then(data[NUMBER_EIGHT]).isEqualTo("9 6 1 VERTICAL");
+        then(data[NUMBER_NINE]).isEqualTo("9 9 1 HORIZONTAL");
 
         myDataBase.clearShips();
     }
@@ -71,16 +83,16 @@ public class MyDataBase_Test {
         addElementForTestShipsHuman();
 
         String[] data = myDataBase.getHumanShips();
-        then(data[0]).isEqualTo("0 5 4 HORIZONTAL");
-        then(data[1]).isEqualTo("6 5 3 HORIZONTAL");
-        then(data[2]).isEqualTo("4 1 3 HORIZONTAL");
-        then(data[3]).isEqualTo("7 0 2 VERTICAL");
-        then(data[4]).isEqualTo("2 5 2 VERTICAL");
-        then(data[5]).isEqualTo("3 8 2 VERTICAL");
-        then(data[6]).isEqualTo("8 4 1 HORIZONTAL");
-        then(data[7]).isEqualTo("2 3 1 VERTICAL");
-        then(data[8]).isEqualTo("0 2 1 VERTICAL");
-        then(data[9]).isEqualTo("2 0 1 HORIZONTAL");
+        then(data[NUMBER_ZERO]).isEqualTo("0 5 4 HORIZONTAL");
+        then(data[NUMBER_ONE]).isEqualTo("6 5 3 HORIZONTAL");
+        then(data[NUMBER_TWO]).isEqualTo("4 1 3 HORIZONTAL");
+        then(data[NUMBER_THREE]).isEqualTo("7 0 2 VERTICAL");
+        then(data[NUMBER_FOUR]).isEqualTo("2 5 2 VERTICAL");
+        then(data[NUMBER_FIVE]).isEqualTo("3 8 2 VERTICAL");
+        then(data[NUMBER_SIX]).isEqualTo("8 4 1 HORIZONTAL");
+        then(data[NUMBER_SEVEN]).isEqualTo("2 3 1 VERTICAL");
+        then(data[NUMBER_EIGHT]).isEqualTo("0 2 1 VERTICAL");
+        then(data[NUMBER_NINE]).isEqualTo("2 0 1 HORIZONTAL");
 
         myDataBase.clearShips();
     }
@@ -116,38 +128,38 @@ public class MyDataBase_Test {
     private void addElementForTestCellsHuman() {
         String statesStr = "SEA SEA SEA MISS SEA SEA SEA SEA SEA MISS";
         StringBuilder states = new StringBuilder(statesStr);
-        dbPersistence.createCells(10, "Human", states, 9, 8);
+        dbPersistence.createCells(NUMBER_TEN, "Human", states, NUMBER_NINE, NUMBER_EIGHT);
     }
 
     private void addElementForTestCellsComputer() {
         String statesStr = "SEA SEA MISS MISS MISS MISS MISS MISS MISS KILL";
         StringBuilder states = new StringBuilder(statesStr);
-        dbPersistence.createCells(10, "Computer", states, 2, 5);
+        dbPersistence.createCells(NUMBER_TEN, "Computer", states, NUMBER_TWO, NUMBER_FIVE);
     }
 
     private void addElementForTestShipsComputer() {
-        dbPersistence.createShips(1, "Computer", 4, 1, 6, "VERTICAL");
-        dbPersistence.createShips(2, "Computer", 3, 4, 0, "HORIZONTAL");
-        dbPersistence.createShips(3, "Computer", 3, 6, 0, "HORIZONTAL");
-        dbPersistence.createShips(4, "Computer", 2, 0, 2, "HORIZONTAL");
-        dbPersistence.createShips(5, "Computer", 2, 3, 8, "VERTICAL");
-        dbPersistence.createShips(6, "Computer", 2, 7, 4, "VERTICAL");
-        dbPersistence.createShips(7, "Computer", 1, 2, 2, "VERTICAL");
-        dbPersistence.createShips(8, "Computer", 1, 9, 0, "VERTICAL");
-        dbPersistence.createShips(9, "Computer", 1, 9, 6, "VERTICAL");
-        dbPersistence.createShips(10, "Computer", 1, 9, 9, "HORIZONTAL");
+        dbPersistence.createShips(NUMBER_ONE, "Computer", NUMBER_FOUR, NUMBER_ONE, NUMBER_SIX, "VERTICAL");
+        dbPersistence.createShips(NUMBER_TWO, "Computer", NUMBER_THREE, NUMBER_FOUR, NUMBER_ONE, "HORIZONTAL");
+        dbPersistence.createShips(NUMBER_THREE, "Computer", NUMBER_THREE, NUMBER_SIX, NUMBER_ZERO, "HORIZONTAL");
+        dbPersistence.createShips(NUMBER_FOUR, "Computer", NUMBER_TWO, NUMBER_ZERO, NUMBER_TWO, "HORIZONTAL");
+        dbPersistence.createShips(NUMBER_FIVE, "Computer", NUMBER_TWO, NUMBER_THREE, NUMBER_EIGHT, "VERTICAL");
+        dbPersistence.createShips(NUMBER_SIX, "Computer", NUMBER_TWO, NUMBER_SEVEN, NUMBER_FOUR, "VERTICAL");
+        dbPersistence.createShips(NUMBER_SEVEN, "Computer", NUMBER_ONE, NUMBER_TWO, NUMBER_TWO, "VERTICAL");
+        dbPersistence.createShips(NUMBER_EIGHT, "Computer", NUMBER_ONE, NUMBER_NINE, NUMBER_ZERO, "VERTICAL");
+        dbPersistence.createShips(NUMBER_NINE, "Computer", NUMBER_ONE, NUMBER_NINE, NUMBER_SIX, "VERTICAL");
+        dbPersistence.createShips(NUMBER_TEN, "Computer", NUMBER_ONE, NUMBER_NINE, NUMBER_NINE, "HORIZONTAL");
     }
 
     private void addElementForTestShipsHuman() {
-        dbPersistence.createShips(1, "Human", 4, 0, 5, "HORIZONTAL");
-        dbPersistence.createShips(2, "Human", 3, 6, 5, "HORIZONTAL");
-        dbPersistence.createShips(3, "Human", 3, 4, 1, "HORIZONTAL");
-        dbPersistence.createShips(4, "Human", 2, 7, 0, "VERTICAL");
-        dbPersistence.createShips(5, "Human", 2, 2, 5, "VERTICAL");
-        dbPersistence.createShips(6, "Human", 2, 3, 8, "VERTICAL");
-        dbPersistence.createShips(7, "Human", 1, 8, 4, "HORIZONTAL");
-        dbPersistence.createShips(8, "Human", 1, 2, 3, "VERTICAL");
-        dbPersistence.createShips(9, "Human", 1, 0, 2, "VERTICAL");
-        dbPersistence.createShips(10, "Human", 1, 2, 0, "HORIZONTAL");
+        dbPersistence.createShips(NUMBER_ONE, "Human", NUMBER_FOUR, NUMBER_ZERO, NUMBER_FIVE, "HORIZONTAL");
+        dbPersistence.createShips(NUMBER_TWO, "Human", NUMBER_THREE, NUMBER_SIX, NUMBER_FIVE, "HORIZONTAL");
+        dbPersistence.createShips(NUMBER_THREE, "Human", NUMBER_THREE, NUMBER_FOUR, NUMBER_ONE, "HORIZONTAL");
+        dbPersistence.createShips(NUMBER_FOUR, "Human", NUMBER_TWO, NUMBER_SEVEN, NUMBER_ZERO, "VERTICAL");
+        dbPersistence.createShips(NUMBER_FIVE, "Human", NUMBER_TWO, NUMBER_TWO, NUMBER_FIVE, "VERTICAL");
+        dbPersistence.createShips(NUMBER_SIX, "Human", NUMBER_TWO, NUMBER_THREE, NUMBER_EIGHT, "VERTICAL");
+        dbPersistence.createShips(NUMBER_SEVEN, "Human", NUMBER_ONE, NUMBER_EIGHT, NUMBER_FOUR, "HORIZONTAL");
+        dbPersistence.createShips(NUMBER_EIGHT, "Human", NUMBER_ONE, NUMBER_TWO, NUMBER_THREE, "VERTICAL");
+        dbPersistence.createShips(NUMBER_NINE, "Human", NUMBER_ONE, NUMBER_ZERO, NUMBER_TWO, "VERTICAL");
+        dbPersistence.createShips(NUMBER_TEN, "Human", NUMBER_ONE, NUMBER_TWO, NUMBER_ZERO, "HORIZONTAL");
     }
 }

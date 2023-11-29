@@ -9,36 +9,44 @@ import static org.assertj.core.api.BDDAssertions.then;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 public class Computer_Logic_Test {
+    private static final int NUMBER_ZERO = 0;
+    private static final int NUMBER_ONE = 1;
+    private static final int NUMBER_TWO = 2;
+    private static final int NUMBER_THREE = 3;
+    private static final int NUMBER_FOUR = 4;
+    private static final int NUMBER_FIVE = 5;
+    private static final int NUMBER_SIX = 6;
+
     private final Computer computer = Computer.getInstance();
 
     @Test
     @DisplayName("when computer marks cells as killed after shot")
     public void whenComputerMarksCellsAsKilledAfterShot() {
-        computer.markKilled(1, 1);
+        computer.markKilled(NUMBER_ONE, NUMBER_ONE);
         Cell[][] cells = computer.getEnemyCells();
 
-        then("KILL").isEqualTo(cells[1][1].getState().toString());
-        then("MISS").isEqualTo(cells[0][0].getState().toString());
-        then("MISS").isEqualTo(cells[2][2].getState().toString());
-        then("MISS").isEqualTo(cells[0][1].getState().toString());
-        then("MISS").isEqualTo(cells[2][1].getState().toString());
-        then("SEA").isEqualTo(cells[1][3].getState().toString());
-        then("SEA").isEqualTo(cells[3][1].getState().toString());
+        then("KILL").isEqualTo(cells[NUMBER_ONE][NUMBER_ONE].getState().toString());
+        then("MISS").isEqualTo(cells[NUMBER_ZERO][NUMBER_ZERO].getState().toString());
+        then("MISS").isEqualTo(cells[NUMBER_TWO][NUMBER_TWO].getState().toString());
+        then("MISS").isEqualTo(cells[NUMBER_ZERO][NUMBER_ONE].getState().toString());
+        then("MISS").isEqualTo(cells[NUMBER_TWO][NUMBER_ONE].getState().toString());
+        then("SEA").isEqualTo(cells[NUMBER_ONE][NUMBER_THREE].getState().toString());
+        then("SEA").isEqualTo(cells[NUMBER_THREE][NUMBER_ONE].getState().toString());
     }
 
     @Test
     @DisplayName("when computer calculate aims for next shots")
     public void whenComputerCalculateAimsForNextShots() {
-        computer.markKilled(1, 1);
+        computer.markKilled(NUMBER_ONE, NUMBER_ONE);
 
-        computer.setLastX(3);
-        computer.setLastY(1);
+        computer.setLastX(NUMBER_THREE);
+        computer.setLastY(NUMBER_ONE);
         computer.calculateAims();
 
-        Integer[] expectedRight = {4, 5, 6};
+        Integer[] expectedRight = {NUMBER_FOUR, NUMBER_FIVE, NUMBER_SIX};
         Integer[] expectedLeft = {};
-        Integer[] expectedUp = {0};
-        Integer[] expectedDown = {2, 3, 4};
+        Integer[] expectedUp = {NUMBER_ZERO};
+        Integer[] expectedDown = {NUMBER_TWO, NUMBER_THREE, NUMBER_FOUR};
 
         Object[] actualRight = computer.getRightAims().toArray();
         Object[] actualLeft = computer.getLeftAims().toArray();
@@ -54,13 +62,13 @@ public class Computer_Logic_Test {
     @Test
     @DisplayName("when computer gets coordinate to shoot at one of the aim")
     public void whenComputerGetNextCoordinateToShoot() {
-        computer.markKilled(1, 1);
-        computer.setLastX(3);
-        computer.setLastY(1);
+        computer.markKilled(NUMBER_ONE, NUMBER_ONE);
+        computer.setLastX(NUMBER_THREE);
+        computer.setLastY(NUMBER_ONE);
         computer.calculateAims();
 
         int[] actualNextCoordinate = computer.getNextCoordinates();
-        int[] expectedNextCoordinate = {4, 1};
+        int[] expectedNextCoordinate = {NUMBER_FOUR, NUMBER_ONE};
         assertArrayEquals(expectedNextCoordinate, actualNextCoordinate);
     }
 }

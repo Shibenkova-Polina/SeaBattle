@@ -5,9 +5,13 @@ import org.junit.jupiter.api.Test;
 import ru.game.seabattle.players.Human;
 import ru.game.seabattle.process.ArrangementOfShips;
 
+import java.lang.ref.PhantomReference;
+
 import static org.assertj.core.api.BDDAssertions.then;
 
 public class CreateShips_Test {
+    private static final int COUNT_OF_SHIPS = 10;
+
     @Test
     @DisplayName("when program creates and places ships")
     public void whenProgramCreatesAndPlacesShips() {
@@ -16,6 +20,6 @@ public class CreateShips_Test {
 
         arrangementOfShips.setPlacementField(human.getField().getCells());
         arrangementOfShips.createShips(human.getField());
-        then(10).isEqualTo(arrangementOfShips.getIdPlacements());
+        then(COUNT_OF_SHIPS).isEqualTo(arrangementOfShips.getIdPlacements());
     }
 }
