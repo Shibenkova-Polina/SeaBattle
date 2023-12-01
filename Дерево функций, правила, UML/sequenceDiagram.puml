@@ -1,0 +1,53 @@
+@startuml
+
+participant Main
+participant Game
+participant Player
+participant GameInterface
+participant ArrangementOfShips
+participant MyDataBase
+
+Main -> Game : запуск игры
+    activate Game
+    Game -> Player : создание игроков
+    activate Player
+    group игра продолжается [пока игрок не захочет выйти]
+        Player -> ArrangementOfShips : получить корабли
+        group игрок начинает новую игру
+            ArrangementOfShips -> ArrangementOfShips : создать и расставить корабли
+            ArrangementOfShips -> MyDataBase : сохранить расстановку
+            MyDataBase -> MyDataBase : сохранение расстановки кораблей
+        else игрок продолжает последнюю игру
+            ArrangementOfShips -> MyDataBase : получить данные о последней игре
+            activate MyDataBase
+            MyDataBase -> MyDataBase : загрузить данные о последней игре
+            MyDataBase --> ArrangementOfShips : вернуть данные о последеней игре
+            deactivate MyDataBase
+            ArrangementOfShips -> ArrangementOfShips : создать и расставить корабли
+        end
+
+        Game -> GameInterface : отрисовка полей игроков
+        Game -> Game : сообщение начала игры
+
+        group процесс игры [пока есть корабли для уничтожения]
+            Game -> Player : ожидание хода
+            group выстрел [первый ход / корабль ранен или убит]
+                Player -> Player : выполнение хода по координатам
+                Player -> GameInterface : обновить поля игроков
+                GameInterface -> GameInterface : отрисовка полей игроков
+            else промах
+                Player -> Player : передача хода
+            end
+        else нет кораблей для уничтожения
+            Game -> Game : сообщение об окончании игры и победителе
+        end
+
+    else игрок хочет закончить текущую игру
+        Game -> MyDataBase : сохранить текущую версию игры
+        Game --> Main : выход из игры
+        destroy Player
+        destroy Game
+        deactivate Game
+    end
+
+@enduml
