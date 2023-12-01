@@ -47,7 +47,6 @@ Main -> Game : запуск игры
         Game --> Main : выход из игры
         destroy Player
         destroy Game
-        deactivate Game
     end
 
 @enduml
