@@ -248,7 +248,7 @@ enum ShootResult << enumeration >> {
   + valueOf(String): ShootResult
 }
 
-Game <.. Main
+Game <-- Main
 Human --|> Player
 Computer --|> Player
 Game *-- Computer
@@ -261,11 +261,20 @@ GameInterface  ..>  ActionListenerNewGameSwitch
 GameInterface  ..>  ActionListenerPreviousGameSwitch
 GameInterface  ..>  ActionListenerSwitch
 
-Player *-- ShootResult
+Player --> ShootResult
+Messages --> ShootResult
+Computer --> ShootResult
+Human --> ShootResult
+
 Player *-- Field
 Field *-- Cell
-Cell *-- CellState
 Cell --> Ship
+
+Cell --> CellState
+GameInterface --> CellState
+Computer --> CellState
+Field --> CellState
+Player --> CellState
 
 Computer --> Cell
 
