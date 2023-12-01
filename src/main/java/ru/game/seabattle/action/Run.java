@@ -5,7 +5,7 @@ import ru.game.seabattle.gui.Messages;
 import ru.game.seabattle.process.Game;
 
 public class Run implements Runnable {
-    private final int SLEEP_TIME = 5;
+    private final int SLEEP_TIME = 3;
 
     @Override
     public void run() {

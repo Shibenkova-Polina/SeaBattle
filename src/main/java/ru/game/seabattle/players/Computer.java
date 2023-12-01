@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public class Computer extends Player {
     private int shipsToKill = NUMBER_OF_PLAYER_SHIPS;
-    private final int SLEEP_TIME_SHOT = 300;
-    private final int SLEEP_TIME_AFTER_SHOT = 2000;
+    private final int SLEEP_TIME_SHOT = 150;
+    private final int SLEEP_TIME_AFTER_SHOT = 1300;
     private final int NUMBER_OF_SHIP_TYPES = 4;
     private final int NUMBER_OF_COORDINATES = 2;
 

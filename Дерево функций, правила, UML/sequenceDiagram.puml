@@ -11,13 +11,13 @@ Main -> Game : запуск игры
     activate Game
     Game -> Player : создание игроков
     activate Player
-    group игра продолжается [пока игрок не захочет выйти]
+    group игра продолжается [пока пользователь не захочет выйти]
         Player -> ArrangementOfShips : получить корабли
-        group игрок начинает новую игру
+        group пользователь начинает новую игру
             ArrangementOfShips -> ArrangementOfShips : создать и расставить корабли
             ArrangementOfShips -> MyDataBase : сохранить расстановку
             MyDataBase -> MyDataBase : сохранение расстановки кораблей
-        else игрок продолжает последнюю игру
+        else пользователь продолжает последнюю игру
             ArrangementOfShips -> MyDataBase : получить данные о последней игре
             activate MyDataBase
             MyDataBase -> MyDataBase : загрузить данные о последней игре
@@ -26,10 +26,11 @@ Main -> Game : запуск игры
             ArrangementOfShips -> ArrangementOfShips : создать и расставить корабли
         end
 
-        Game -> GameInterface : отрисовка полей игроков
+        Game -> GameInterface : отобразить поля игроков
+        GameInterface -> GameInterface : отрисовка полей игроков
         Game -> Game : сообщение начала игры
 
-        group процесс игры [пока есть корабли для уничтожения]
+        group процесс игры [пока у игроков есть корабли для уничтожения]
             Game -> Player : ожидание хода
             group выстрел [первый ход / корабль ранен или убит]
                 Player -> Player : выполнение хода по координатам
@@ -38,12 +39,13 @@ Main -> Game : запуск игры
             else промах
                 Player -> Player : передача хода
             end
-        else нет кораблей для уничтожения
+        else у игроков не осталось кораблей для уничтожения
             Game -> Game : сообщение об окончании игры и победителе
         end
 
-    else игрок хочет закончить текущую игру
+    else пользователь хочет закончить текущую игру
         Game -> MyDataBase : сохранить текущую версию игры
+        MyDataBase -> MyDataBase : сохранение текущей версии игры
         Game --> Main : выход из игры
         destroy Player
         destroy Game
