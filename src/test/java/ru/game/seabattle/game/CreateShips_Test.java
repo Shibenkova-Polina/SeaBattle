@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 import ru.game.seabattle.players.Human;
 import ru.game.seabattle.process.ArrangementOfShips;
 
-import java.lang.ref.PhantomReference;
-
 import static org.assertj.core.api.BDDAssertions.then;
 
 public class CreateShips_Test {

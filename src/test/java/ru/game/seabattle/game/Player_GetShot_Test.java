@@ -45,8 +45,20 @@ public class Player_GetShot_Test {
     }
 
     @Test
-    @DisplayName("when player shoots at cell with state SHIP")
-    public void whenPlayerShootsAtCellWithStateShip() {
+    @DisplayName("when player shoots at cell with state SHIP to injure it")
+    public void whenPlayerShootsAtCellWithStateShipToInjureIt() {
+        arrangementOfShips.setPlacementField(human.getField().getCells());
+
+        cells[COORDINATE_THREE][COORDINATE_THREE].setState(CellState.SHIP);
+        arrangementOfShips.createShip(COORDINATE_THREE, COORDINATE_THREE, SIZE_TWO, ArrangementOfShips.Orientation.VERTICAL);
+
+        ShootResult shootResult = human.getShot(COORDINATE_THREE, COORDINATE_THREE);
+        then("INJURE").isEqualTo(shootResult.toString());
+    }
+
+    @Test
+    @DisplayName("when player shoots at cell with state SHIP to kill it")
+    public void whenPlayerShootsAtCellWithStateShipToKillIt() {
         arrangementOfShips.setPlacementField(human.getField().getCells());
 
         cells[COORDINATE_THREE][COORDINATE_THREE].setState(CellState.SHIP);
@@ -54,11 +66,6 @@ public class Player_GetShot_Test {
 
         ShootResult shootResult = human.getShot(COORDINATE_THREE, COORDINATE_THREE);
         then("KILL").isEqualTo(shootResult.toString());
-
-        arrangementOfShips.createShip(COORDINATE_THREE, COORDINATE_THREE, SIZE_TWO, ArrangementOfShips.Orientation.VERTICAL);
-
-        shootResult = human.getShot(COORDINATE_THREE, COORDINATE_THREE);
-        then("INJURE").isEqualTo(shootResult.toString());
     }
 
     @Test
