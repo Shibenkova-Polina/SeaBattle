@@ -5,7 +5,7 @@ participant Game
 participant Player
 participant GameInterface
 participant ArrangementOfShips
-participant MyDataBase
+database MyDataBase
 
 Main -> Game : запуск игры
     activate Game

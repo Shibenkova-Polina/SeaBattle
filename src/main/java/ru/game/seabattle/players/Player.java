@@ -48,8 +48,6 @@ public abstract class Player {
                     return ShootResult.INJURE;
                 case KILL:
                     return ShootResult.KILL;
-                default:
-                    return null;
             }
         }
         return null;

@@ -36,7 +36,7 @@ class ActionListenerSwitch {
   - fillDB(Field, boolean): void
 }
 class ArrangementOfShips {
-  - instance: ArrangementOfShips
+  - {static} instance: ArrangementOfShips
   - placementField: Cell[][]
   - idPlacements: int
   + createShip(int, int, int, Orientation): void
@@ -44,7 +44,7 @@ class ArrangementOfShips {
   + createPrevShips(Field, String[]): void
   - validPlace(int, int, int, Orientation): boolean
   + setIdPlacements(int): void
-  + getInstance(): ArrangementOfShips
+  + {static} getInstance(): ArrangementOfShips
   + setPlacementField(Cell[][]): void
   + createShips(Field): void
 }
@@ -74,7 +74,7 @@ enum CellState << enumeration >> {
   + valueOf(String): CellState
 }
 class Computer {
-  - instance: Computer
+  - {static} instance: Computer
   - enemyCells: Cell[][]
   - currentAims: ArrayList<Integer>
   - aimsCalculated: boolean
@@ -92,7 +92,7 @@ class Computer {
   + getNextCoordinates(): int[]
   + getEnemyCells(): Cell[][]
   - getRandomCoordinates(): int[]
-  + getInstance(): Computer
+  + {static} getInstance(): Computer
   + setLastY(int): void
   + calculateAims(): void
   + setShipsToKill(int): void
@@ -130,7 +130,7 @@ class Game {
   - human: Human
   - lastGame: Thread
   - computer: Computer
-  - instance: Game
+  - {static} instance: Game
   - newGame: boolean
   + playGame(): void
   + setNewGame(boolean): void
@@ -138,11 +138,11 @@ class Game {
   + getComputer(): Computer
   + getHuman(): Human
   + getNewGame(): boolean
-  + getInstance(): Game
+  + {static} getInstance(): Game
 }
 class GameInterface {
-  ~ game: Game
-  - instance: GameInterface
+  - game: Game
+  - {static} instance: GameInterface
   - textLabel: JLabel
   - picture: ImageIcon
   - injure: ImageIcon
@@ -161,7 +161,7 @@ class GameInterface {
   - constraints: GridBagConstraints
   + setTextLabel(String): void
   - updateField(Field, boolean): void
-  + getInstance(): GameInterface
+  + {static} getInstance(): GameInterface
   - initializeFields(): void
   - updateHumanCell(Cell): void
   - initializeField(JPanel, Field): void
@@ -170,11 +170,11 @@ class GameInterface {
 }
 class Human {
   - shipsToKill: int
-  - instance: Human
+  - {static} instance: Human
   + setShipsToKill(int): void
   + actionPerformed(ActionEvent): void
   + getShipsToKill(): int
-  + getInstance(): Human
+  + {static} getInstance(): Human
   + setOpponent(Player): void
   + newGame(): void
   - shoot(int, int): void
@@ -186,14 +186,14 @@ class Main {
 }
 class Messages {
   - gameInterface: GameInterface
-  - instance: Messages
-  + getInstance(): Messages
+  - {static} instance: Messages
+  + {static} getInstance(): Messages
   + getStartMessage(): void
   + getWinMessage(boolean): void
   + getMessage(boolean, ShootResult): void
 }
 class MyDataBase {
-  - instanse: MyDataBase
+  - {static} instanse: MyDataBase
   - properties: DatabaseProperties
   + getHumanShips(): String[]
   - connectShips(String, String[]): void
@@ -204,17 +204,16 @@ class MyDataBase {
   - connect(): Connection
   - init(): void
   + clearCells(): void
-  + getInstance(): MyDataBase
+  + {static} getInstance(): MyDataBase
   + getComputerShips(): String[]
   + getHumanCells(): Map<String, String>
   - createCells(): void
   + clearShips(): void
 }
-class Player {
+abstract class Player {
   + myTurn: boolean
   + shootResult: ShootResult
   + opponent: Player
-  + NUMBER_OF_PLAYER_SHIPS: int
   - field: Field
   + newGame(): void
   + getShot(int, int): ShootResult
@@ -224,9 +223,9 @@ class Player {
   + switchPlayers(): void
 }
 class PropertiesFactory {
-  - properties: DatabaseProperties
-  - init(): void
-  + getProperties(): DatabaseProperties
+  - {static} properties: DatabaseProperties
+  - {static} init(): void
+  + {static} getProperties(): DatabaseProperties
 }
 class Run {
   - SLEEP_TIME: int

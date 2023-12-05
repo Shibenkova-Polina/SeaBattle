@@ -21,16 +21,16 @@ public class GameInterface extends JFrame {
     private static final int PANEL_FIELD_SIZE = 400;
     private static final int WINDOW_GRID_SIZE = 2;
 
-    private CardLayout cardLayout = new CardLayout();
-    private JPanel cardPanel = new JPanel(cardLayout);
-    private JPanel panelStart = new JPanel();
-    private JPanel humanField = new JPanel();
-    private JPanel computerField = new JPanel();
-    private JPanel gamePanel = new JPanel();
-    private JPanel buttonPanel = new JPanel();
-    private JPanel buttonAlignment = new JPanel(new GridBagLayout());
+    private final CardLayout cardLayout = new CardLayout();
+    private final JPanel cardPanel = new JPanel(cardLayout);
+    private final JPanel panelStart = new JPanel();
+    private final JPanel humanField = new JPanel();
+    private final JPanel computerField = new JPanel();
+    private final JPanel gamePanel = new JPanel();
+    private final JPanel buttonPanel = new JPanel();
+    private final JPanel buttonAlignment = new JPanel(new GridBagLayout());
 
-    private GridBagConstraints constraints = new GridBagConstraints();
+    private final GridBagConstraints constraints = new GridBagConstraints();
 
     private JLabel textLabel = new JLabel();
 
@@ -42,7 +42,7 @@ public class GameInterface extends JFrame {
     private final ImageIcon picture = new ImageIcon(Thread.currentThread().getContextClassLoader().getResource("icons/picture.png"));
 
     private static GameInterface instance;
-    Game game = Game.getInstance();
+    private final Game game = Game.getInstance();
 
     public static GameInterface getInstance() {
         if (instance == null) {
