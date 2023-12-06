@@ -47,6 +47,7 @@ public class Game {
         if (instance == null) {
             instance = new Game();
         }
+
         return instance;
     }
 }

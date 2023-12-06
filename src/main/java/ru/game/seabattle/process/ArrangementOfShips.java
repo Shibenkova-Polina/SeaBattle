@@ -62,7 +62,7 @@ public class ArrangementOfShips {
                         orientation = Orientation.VERTICAL;
                     }
 
-                    if (orientation == Orientation.HORIZONTAL) {
+                    if (orientation == Orientation.VERTICAL) {
                         x = (int) (Math.random() * (Field.FIELD_SIZE - shipSize + 1));
                         y = (int) (Math.random() * Field.FIELD_SIZE);
                     } else {
